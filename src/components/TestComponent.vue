@@ -1,5 +1,6 @@
 <script setup>
-console.log("123");
+let a = 5 + 6;
+console.log("123", a); //?
 
 alert("ww test");
 </script>

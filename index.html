@@ -1,13 +1,80 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<html lang="en" style="--document-title: '测试';">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/png" href="/favicon.png"/>
+    <!--    <link rel="icon" type="image/svg+xml" href="/favicon.png"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        .title:after {
+            content: var(--document-title);
+        }
+    </style>
+    <title class="title">#{webSiteTitle}</title>
+    <script>
+      window.setTitle = function (title, appendString) {
+        appendString = appendString || "#{webSiteTitle} - ";
+        document.title = appendString + title;
+      };
+    </script>
+    <style>
+        html, body {
+            margin: 0;
+        }
+
+        @font-face {
+            font-family: "Nikkyou-sans"; /* Project id 3022985 */
+            src: url('./fonts/NikkyouSans-mLKax.ttf?t=1646908163356') format('truetype');
+        }
+
+        .LoadingContainer {
+            --loading-font-size: clamp(30px, 10vw, 10rem);
+            font-family: Nikkyou-sans, sans-serif;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            color: #fff;
+            user-select: none;
+            z-index: 2147483648;
+            position: relative;
+
+            /*font-weight: bold;*/
+
+            ruby {
+                font-size: var(--loading-font-size);
+            }
+            .size {
+                display: flex;
+                align-items: flex-end;
+                /* flex-direction: column; */
+
+                .square {
+                    /*--square-size: calc(var(--loading-font-size) / 5 * var(--square-scale-size));
+                    display: inline-block;
+                    width: var(--square-size);
+                    height: var(--square-size);
+                    margin-right: 6px;
+                    background: #fff;
+                    border-radius: .2rem;
+                    margin-bottom: calc(var(--loading-font-size) / 10 + 1px);*/
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="LoadingContainer">
+    <div class="size">
+<!--        <span class="scale-80">サイト　ローディング　チュウ</span>-->
+        <ruby>Site<rt>サイト</rt></ruby><ruby>&nbsp;</ruby><ruby>Loading<rt>ローディング</rt></ruby><ruby>&nbsp;</ruby><ruby>....</ruby>
+    </div>
+</div>
+<div id="app"></div>
+<!--<script type="module" src="/src/main.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"
+        integrity="sha512-7Au1ULjlT8PP1Ygs6mDZh9NuQD0A5prSrAUiPHMXpU6g3UMd8qesVnhug5X4RoDr35x5upNpx0A6Sisz1LSTXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>-->
+</body>
 </html>

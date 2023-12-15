@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>响应式导航栏和输入框</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            padding-top: 60px;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .menu-button {
+            display: none; /* 默认不显示菜单按钮 */
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+        }
+        .nav-item {
+            display: block; /* 默认显示链接 */
+        }
+        .container {
+            width: calc(100% - 40px);
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box; /* 防止宽度超出容器 */
+        }
+
+        /* 响应式部分 */
+        @media screen and (max-width: 768px) {
+            .menu-button {
+                display: block; /* 在移动端显示菜单按钮 */
+            }
+            .nav-links {
+                display: none; /* 默认不显示链接 */
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px; /* 调整为导航栏高度 */
+                left: -100%; /* 初始时在屏幕外 */
+                background-color: #333;
+                transition: left 0.3s; /* 平滑过渡效果 */
+            }
+            .nav-links.active {
+                left: 0; /* 点击菜单时显示链接 */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <div class="nav-container">
+        <span class="menu-button" onclick="toggleMenu()">☰ 菜单</span>
+        <ul class="nav-links">
+            <li class="nav-item"><a href="#">首页</a></li>
+            <li class="nav-item"><a href="#">服务</a></li>
+            <li class="nav-item"><a href="#">联系我们</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 输入框内容 -->
+</div>
+
+<script>
+  function toggleMenu() {
+    var links = document.querySelector('.nav-links');
+    if (links.style.display === "block") {
+      links.style.display = "none";
+    } else {
+      links.style.display = "block";
+    }
+  }
+</script>
+<div aria-disabled="true"
+     name="myname"
+     id="myid"
+     class="myclass"
+     src="other"
+></div>
+</body>
+</html>

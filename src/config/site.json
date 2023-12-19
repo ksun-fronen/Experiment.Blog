@@ -1,5 +1,22 @@
 {
   "IndexTemplateVariable": {
-    "webSiteTitle": "カフェい"
+    "webSiteTitle": "カフェい",
+    "development": {
+      "integrity": {
+        "pixi": "sha512-r41kv6SNGdLQ+xLdzobSuCrZZz7RFt+XSk5y8dQ8i5HHP/2FSPOfEcaPw16isI8OjL45bSPTttqBOpjeCwP61w==",
+        "gsap": "sha512-UY75163foK/UUKit7pckYbfPfv2Rmj5poIDJnmgZ4exc6vWS4WvPybaQmLF3xMlAkyRTXEU6oW44kgBJLOh8VQ=="
+      }
+    },
+    "production": {
+      "minSignExtension": ".min",
+      "integrity": {
+        "pixi": "sha512-4ZfEVGDoKT//8YicIXrm8r/GyfPWIDyPT06i3FfPqjRc0vKZld/q6dBQQqO1Uogst58ytaBTI7lY2eU1+jniKg==",
+        "gsap": "sha512-EZI2cBcGPnmR89wTgVnN3602Yyi7muWo8y1B3a8WmIv1J9tYG+udH4LvmYjLiGp37yHB7FfaPBo8ly178m9g4Q=="
+      },
+      "sourcemap": {
+        "pixi": "",
+        "gsap": ""
+      }
+    }
   }
 }

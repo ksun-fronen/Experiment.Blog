@@ -1,4 +1,5 @@
 <!doctype html>
+<!--suppress ALL -->
 <html lang="en" style="--document-title: '测试';">
 <head>
     <meta charset="UTF-8"/>
@@ -10,10 +11,15 @@
             content: var(--document-title);
         }
     </style>
-    <title class="title">#{webSiteTitle}</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"
-            integrity="sha512-7Au1ULjlT8PP1Ygs6mDZh9NuQD0A5prSrAUiPHMXpU6g3UMd8qesVnhug5X4RoDr35x5upNpx0A6Sisz1LSTXA=="
+    <title class="title">%VITE_HTML_WEB_SITE_TITLE%</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
+            integrity="%VITE_INTEGRITY_GSAP%"
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    %VITE_SOURCE_MAP_GSAP%
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi%VITE_MIN_EXTENSION%.js"
+            integrity="%VITE_INTEGRITY_PIXI%"
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    %VITE_SOURCE_MAP_PIXI%
     <style>
         html, body {
             margin: 0;
@@ -42,6 +48,7 @@
             ruby {
                 font-size: var(--loading-font-size);
             }
+
             .size {
                 display: flex;
                 align-items: flex-end;
@@ -62,20 +69,28 @@
     </style>
     <script>
       window.setTitle = function (title, appendString) {
-        appendString = appendString || "#{webSiteTitle} - ";
+        appendString = appendString || "%webSiteTitle% - ";
         document.title = appendString + title;
       };
 
-      function onLoad(){
-        console.log(document.body.innerHTML)
+      function onLoad() {
+        console.log(document.body.innerHTML);
       }
     </script>
 </head>
 <body onload="onLoad()">
 <div class="LoadingContainer">
     <div class="size">
-<!--        <span class="scale-80">サイト　ローディング　チュウ</span>-->
-        <ruby>Site<rt>サイト</rt></ruby><ruby>&nbsp;</ruby><ruby>Loading<rt>ローディング</rt></ruby><ruby>&nbsp;</ruby><ruby>....</ruby>
+        <!--        <span class="scale-80">サイト　ローディング　チュウ</span>-->
+        <ruby>Site
+            <rt>サイト</rt>
+        </ruby>
+        <ruby>&nbsp;</ruby>
+        <ruby>Loading
+            <rt>ローディング</rt>
+        </ruby>
+        <ruby>&nbsp;</ruby>
+        <ruby>....</ruby>
     </div>
 </div>
 <div id="app"></div>

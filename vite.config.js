@@ -1,6 +1,10 @@
-import { defineConfig } from "vite";
-import vue            from "@vitejs/plugin-vue";
+import { defineConfig }  from "vite";
+import vue             from "@vitejs/plugin-vue";
+import vueJsx          from "@vitejs/plugin-vue-jsx";
+// import { fontSubsetter } from "./vite-plugin/font-subsetter/dist";
+// import Unfonts from "unplugin-fonts/vite";
 // import siteConfig     from "./src/config/site.json";
+import vike from "vike/plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(() => {
@@ -8,7 +12,11 @@ export default defineConfig(() => {
   return {
     envDir: "./config",
     plugins: [
+      vike({
+        prerender: true,
+      }),
       vue(),
+      vueJsx(),
       /*transformHtmlPlugin(
         Object.assign(
           {},

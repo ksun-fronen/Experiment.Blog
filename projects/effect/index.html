@@ -8,6 +8,26 @@
     <title class="title">%VITE_HTML_WEB_SITE_TITLE%</title>
     <link rel="preload" href="./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00" as="font" crossorigin>
     <style>
+        @keyframes animation-cursor {
+            0% {
+                opacity: 0.01;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes animation-mask {
+            to {
+                mask-size:1px 1px;
+                background-size: 0 0;
+            }
+            from {
+                mask-size:200vw 200vw;
+                background-size: 200vw 200vw;
+            }
+        }
+
         html, body {
             margin: 0;
         }
@@ -16,11 +36,12 @@
             font-family: "Nikkyou-sans"; /* Project id 3022985 */
             font-display: block;
             src: url('./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00') format('woff'),
-                 url('./fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00') format('woff2');
+            url('./fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00') format('woff2');
         }
 
         .LoadingContainer {
             --loading-font-size: clamp(30px, 10vw, 6rem);
+            mix-blend-mode: screen;
             transition: 1s ease-in-out;
             transition-delay: 1.2s;
             opacity: 1;
@@ -37,7 +58,8 @@
             justify-content: center;
             color: #fff;
             user-select: none;
-            z-index: 2147483648;
+            z-index: 4;
+            mask-image: radial-gradient(circle 50% 50%, transparent 0%, #fff 1px);
 
             /*font-weight: bold;*/
 
@@ -46,6 +68,7 @@
             }
 
             .size {
+                position: relative;
                 display: flex;
                 align-items: flex-end;
                 /* flex-direction: column; */
@@ -59,6 +82,19 @@
                     background: #fff;
                     border-radius: .2rem;
                     margin-bottom: calc(var(--loading-font-size) / 10 + 1px);*/
+                }
+
+                .cursor {
+                    position: absolute;
+                    width: 2vw;
+                    border-radius: 2px;
+                    height: var(--loading-font-size);
+                    background: #fff;
+                    opacity: .2;
+                    animation: animation-cursor cubic-bezier(1, 0, 0, 1) 300ms;
+                    animation-direction: alternate;
+                    animation-iteration-count: infinite;
+                    right: 0;
                 }
             }
 
@@ -83,6 +119,32 @@
             opacity: 0;
             visibility: hidden;
         }
+
+        .mask {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            background-color: #fff;
+            --size: 40vw;
+            mask-image: radial-gradient(
+                    circle at center,
+                    #ffff calc(50% - 2px),
+                    #fff0 calc(50% - 1px)
+            );
+            mask-clip: fill-box;
+            /*mask-size:200vw 200vw;*/
+            mask-size: 20vw 20vw;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            background-size: 200vw 200vw;
+            background-repeat: no-repeat;
+            background-position: center;
+        /*-webkit-mask-size: 300px; animation: animation-mask 1s ease-in forwards;*/
+            //animation: animation-mask 1s ease-in-out 1 forwards;
+        }
     </style>
     <script>
       window.setTitle = function (title, appendString) {
@@ -103,6 +165,7 @@
         // 加载完毕时
         if (resultPercent >= 100) {
           // document.getElementById("LoadingContainerRef").classList.add("off");
+
         }
       };
     </script>
@@ -121,21 +184,23 @@
             </ruby>
             <ruby>&nbsp;</ruby>
             <ruby>....</ruby>
+            <div class="cursor"></div>
         </div>
         <div class="loading-progress">
             <b class="progress"></b>
         </div>
     </div>
 </div>
+<div class="mask"></div>
 <div id="app"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_GSAP%" onload="setLoadingState(20)"
         crossorigin referrerpolicy="no-referrer"></script>
-%VITE_SOURCE_MAP_GSAP%
+<!--%-VITE_SOURCE_MAP_GSAP-%-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.2/pixi%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_PIXI%" onload="setLoadingState(20)"
         crossorigin referrerpolicy="no-referrer"></script>
-%VITE_SOURCE_MAP_PIXI%
+<!--%-VITE_SOURCE_MAP_PIXI-%-->
 <script type="module" src="/src/main.js" onload="setLoadingState(20)"></script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+{
+  "targetDefaults": {
+    "test": {
+      "dependsOn": [
+        "^test"
+      ],
+      "cache": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": true
+    },
+    "dev": {
+      "dependsOn": [
+        "^dev"
+      ],
+      "cache": true
+    },
+    "preview": {
+      "dependsOn": [
+        "^preview"
+      ],
+      "cache": true
+    },
+    "prepare": {
+      "dependsOn": [
+        "^prepare"
+      ],
+      "cache": true
+    },
+    "lint-staged": {
+      "dependsOn": [
+        "^lint-staged"
+      ],
+      "cache": true
+    }
+  },
+  "affected": {
+    "defaultBase": "master"
+  }
+}

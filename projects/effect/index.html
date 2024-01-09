@@ -19,10 +19,12 @@
 
         @keyframes animation-mask {
             to {
+                clip-path: circle(50.1% at 50% 50%);
                 mask-size:1px 1px;
                 background-size: 0 0;
             }
             from {
+                clip-path: circle(0% at 50% 50%);
                 mask-size:200vw 200vw;
                 background-size: 200vw 200vw;
             }
@@ -103,6 +105,7 @@
                 border: .4rem solid #fff;
                 height: 40px;
                 margin-top: 20px;
+                min-width: 30rem;
 
                 .progress {
                     width: var(--loading-progress);
@@ -129,21 +132,23 @@
             z-index: 5;
             background-color: #fff;
             --size: 40vw;
-            mask-image: radial-gradient(
+            //clip-path: circle(50.1% at 50% 50%);
+            background-clip: circle(50% at 50% 50%);
+            /*mask-image: radial-gradient(
                     circle at center,
                     #ffff calc(50% - 2px),
                     #fff0 calc(50% - 1px)
             );
-            mask-clip: fill-box;
-            /*mask-size:200vw 200vw;*/
+            mask-composite: destination-out;
+            !*mask-size:200vw 200vw;*!
             mask-size: 20vw 20vw;
             mask-position: center;
             mask-repeat: no-repeat;
             background-size: 200vw 200vw;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center;*/
         /*-webkit-mask-size: 300px; animation: animation-mask 1s ease-in forwards;*/
-            //animation: animation-mask 1s ease-in-out 1 forwards;
+            /*animation: animation-mask 1s ease-in-out infinite alternate forwards;*/
         }
     </style>
     <script>
@@ -173,8 +178,7 @@
 <body class="nikkyou-sans" onload="onLoad()">
 <div class="LoadingContainer" id="LoadingContainerRef">
     <div class="container">
-        <div class="size">
-            <!-- <span class="scale-80">サイト　ローディング　チュウ</span> -->
+<!--        <div class="size">
             <ruby>Site
                 <rt>サイト</rt>
             </ruby>
@@ -185,13 +189,16 @@
             <ruby>&nbsp;</ruby>
             <ruby>....</ruby>
             <div class="cursor"></div>
-        </div>
+        </div>-->
         <div class="loading-progress">
             <b class="progress"></b>
         </div>
     </div>
 </div>
-<div class="mask"></div>
+<!--<div class="mask"></div>-->
+<svg >
+
+</svg>
 <div id="app"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_GSAP%" onload="setLoadingState(20)"

@@ -17,6 +17,10 @@
             }
         }
 
+        /* @property --x {
+            
+        } */
+
         @keyframes animation-mask {
             to {
                 clip-path: circle(50.1% at 50% 50%);
@@ -44,8 +48,6 @@
         .LoadingContainer {
             --loading-font-size: clamp(30px, 10vw, 6rem);
             mix-blend-mode: screen;
-            transition: 1s ease-in-out;
-            transition-delay: 1.2s;
             opacity: 1;
             visibility: visible;
             font-family: Nikkyou-sans, sans-serif;
@@ -64,6 +66,9 @@
             mask-image: radial-gradient(circle 50% 50%, transparent 0%, #fff 1px);
 
             /*font-weight: bold;*/
+            .flex{
+                display: flex;
+            }
 
             ruby {
                 font-size: var(--loading-font-size);
@@ -170,7 +175,7 @@
         // 加载完毕时
         if (resultPercent >= 100) {
           // document.getElementById("LoadingContainerRef").classList.add("off");
-
+          window.setLoadingState = () => '';
         }
       };
     </script>
@@ -178,7 +183,7 @@
 <body class="nikkyou-sans" onload="onLoad()">
 <div class="LoadingContainer" id="LoadingContainerRef">
     <div class="container">
-<!--        <div class="size">
+       <div class="size">
             <ruby>Site
                 <rt>サイト</rt>
             </ruby>
@@ -188,8 +193,8 @@
             </ruby>
             <ruby>&nbsp;</ruby>
             <ruby>....</ruby>
-            <div class="cursor"></div>
-        </div>-->
+            <!-- <div class="cursor"></div> -->
+        </div>
         <div class="loading-progress">
             <b class="progress"></b>
         </div>

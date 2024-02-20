@@ -1,0 +1,142 @@
+@keyframes animation-cursor {
+  0% {
+    opacity: 0.01;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* @property --x {
+
+} */
+@keyframes moveBottom {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, 100%);
+  }
+}
+@keyframes LeftRightMove {
+  to {
+    margin-left: 100px;
+  }
+}
+@keyframes animation-mask {
+  to {
+    clip-path: circle(50.1% at 50% 50%);
+    mask-size: 1px 1px;
+    background-size: 0 0;
+  }
+  from {
+    clip-path: circle(0% at 50% 50%);
+    mask-size: 200vw 200vw;
+    background-size: 200vw 200vw;
+  }
+}
+html, body {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "Nikkyou-sans"; /* Project id 3022985 */
+  font-display: block;
+  src: url("../fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00") format("woff"), url("../fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00") format("woff2");
+}
+.LoadingContainer {
+  --loading-font-size: clamp(30px, 10vw, 6rem);
+  mix-blend-mode: screen;
+  opacity: 1;
+  visibility: visible;
+  font-family: Nikkyou-sans, sans-serif;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  color: #fff;
+  z-index: 4;
+  /*font-weight: bold;*/
+}
+.LoadingContainer .container {
+  height: 220px;
+  position: relative;
+}
+@keyframes aaa {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(0, 166px);
+  }
+}
+.LoadingContainer .size {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  height: 166px;
+  z-index: 1;
+  /* flex-direction: column; */
+}
+.LoadingContainer .size ruby {
+  font-size: var(--loading-font-size);
+}
+.LoadingContainer .size .square {
+  /*--square-size: calc(var(--loading-font-size) / 5 * var(--square-scale-size));
+  display: inline-block;
+  width: var(--square-size);
+  height: var(--square-size);
+  margin-right: 6px;
+  background: #fff;
+  border-radius: .2rem;
+  margin-bottom: calc(var(--loading-font-size) / 10 + 1px);*/
+}
+.LoadingContainer .size .cursor {
+  position: absolute;
+  width: 2vw;
+  border-radius: 2px;
+  height: var(--loading-font-size);
+  background: #fff;
+  opacity: 0.2;
+  animation: animation-cursor cubic-bezier(1, 0, 0, 1) 300ms;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  right: 0;
+}
+.LoadingContainer .loading-progress {
+  width: 35vmax;
+  min-width: 100%;
+}
+.LoadingContainer .loading-progress .progress {
+  border: 0.4rem solid #fff;
+  box-sizing: border-box;
+  height: 50px;
+  width: var(--loading-progress);
+  min-width: 100%;
+  background: #fff;
+  transition: 1s ease-in-out;
+  display: block;
+}
+.LoadingContainer .container {
+  --height: 72%;
+  clip-path: polygon(0% var(--height), 100% var(--height), 100% 100%, 0 100%);
+}
+.LoadingContainer .loading-progress {
+  position: relative;
+}
+.LoadingContainer .loading-progress:before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/*# sourceMappingURL=init.css.map */

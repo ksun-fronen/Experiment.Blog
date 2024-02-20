@@ -7,155 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title class="title">%VITE_HTML_WEB_SITE_TITLE%</title>
     <link rel="preload" href="./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00" as="font" crossorigin>
-    <style>
-        @keyframes animation-cursor {
-            0% {
-                opacity: 0.01;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* @property --x {
-            
-        } */
-
-        @keyframes animation-mask {
-            to {
-                clip-path: circle(50.1% at 50% 50%);
-                mask-size:1px 1px;
-                background-size: 0 0;
-            }
-            from {
-                clip-path: circle(0% at 50% 50%);
-                mask-size:200vw 200vw;
-                background-size: 200vw 200vw;
-            }
-        }
-
-        html, body {
-            margin: 0;
-        }
-
-        @font-face {
-            font-family: "Nikkyou-sans"; /* Project id 3022985 */
-            font-display: block;
-            src: url('./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00') format('woff'),
-            url('./fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00') format('woff2');
-        }
-
-        .LoadingContainer {
-            --loading-font-size: clamp(30px, 10vw, 6rem);
-            mix-blend-mode: screen;
-            opacity: 1;
-            visibility: visible;
-            font-family: Nikkyou-sans, sans-serif;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            min-height: 100vh;
-            width: 100vw;
-            justify-content: center;
-            color: #fff;
-            user-select: none;
-            z-index: 4;
-            mask-image: radial-gradient(circle 50% 50%, transparent 0%, #fff 1px);
-
-            /*font-weight: bold;*/
-            .flex{
-                display: flex;
-            }
-
-            ruby {
-                font-size: var(--loading-font-size);
-            }
-
-            .size {
-                position: relative;
-                display: flex;
-                align-items: flex-end;
-                /* flex-direction: column; */
-
-                .square {
-                    /*--square-size: calc(var(--loading-font-size) / 5 * var(--square-scale-size));
-                    display: inline-block;
-                    width: var(--square-size);
-                    height: var(--square-size);
-                    margin-right: 6px;
-                    background: #fff;
-                    border-radius: .2rem;
-                    margin-bottom: calc(var(--loading-font-size) / 10 + 1px);*/
-                }
-
-                .cursor {
-                    position: absolute;
-                    width: 2vw;
-                    border-radius: 2px;
-                    height: var(--loading-font-size);
-                    background: #fff;
-                    opacity: .2;
-                    animation: animation-cursor cubic-bezier(1, 0, 0, 1) 300ms;
-                    animation-direction: alternate;
-                    animation-iteration-count: infinite;
-                    right: 0;
-                }
-            }
-
-            .loading-progress {
-                width: calc(100% - 1rem);
-                border: .4rem solid #fff;
-                height: 40px;
-                margin-top: 20px;
-                min-width: 30rem;
-
-                .progress {
-                    width: var(--loading-progress);
-                    height: 100%;
-                    background: #fff;
-                    transition: 1s ease-in-out;
-                    display: block;
-                }
-            }
-        }
-
-
-        .LoadingContainer.off {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .mask {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            z-index: 5;
-            background-color: #fff;
-            --size: 40vw;
-            //clip-path: circle(50.1% at 50% 50%);
-            background-clip: circle(50% at 50% 50%);
-            /*mask-image: radial-gradient(
-                    circle at center,
-                    #ffff calc(50% - 2px),
-                    #fff0 calc(50% - 1px)
-            );
-            mask-composite: destination-out;
-            !*mask-size:200vw 200vw;*!
-            mask-size: 20vw 20vw;
-            mask-position: center;
-            mask-repeat: no-repeat;
-            background-size: 200vw 200vw;
-            background-repeat: no-repeat;
-            background-position: center;*/
-        /*-webkit-mask-size: 300px; animation: animation-mask 1s ease-in forwards;*/
-            /*animation: animation-mask 1s ease-in-out infinite alternate forwards;*/
-        }
-    </style>
+    <link rel="stylesheet" href="./styles/init.css"/>
     <script>
       window.setTitle = function (title, appendString) {
         appendString = appendString || "%webSiteTitle% - ";
@@ -167,23 +19,45 @@
         setLoadingState(20);
       }
 
-      window.setLoadingState = function (percent) {
-        const currentPercent = parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
-        const resultPercent = Math.min(currentPercent + percent, 100);
-        document.body.style.setProperty("--loading-progress", resultPercent + "%");
+      window.setLoadingState = (function () {
+        let int;
 
-        // 加载完毕时
-        if (resultPercent >= 100) {
-          // document.getElementById("LoadingContainerRef").classList.add("off");
-          window.setLoadingState = () => '';
+        function getLoadingState() {
+          return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
         }
-      };
+
+        const state = function (percent) {
+          const currentPercent = getLoadingState();
+          const resultPercent = Math.min(currentPercent + percent, 100);
+          requestAnimationFrame(() => {
+            document.body.style.setProperty("--loading-progress", resultPercent + "%");
+          }, 200);
+
+          // 加载完毕时
+          if (resultPercent >= 100) {
+            // document.getElementById("LoadingContainerRef").classList.add("off");
+            clearInterval(int);
+            window.setLoadingState = () => "";
+          }
+        };
+
+        int = setInterval(function () {
+          const len = getLoadingState();
+          if (len <= 70) {
+            return state(Math.floor(Math.random() * 10));
+          }
+
+          clearInterval(int);
+        }, 1000);
+
+        return state;
+      })();
     </script>
 </head>
 <body class="nikkyou-sans" onload="onLoad()">
 <div class="LoadingContainer" id="LoadingContainerRef">
     <div class="container">
-       <div class="size">
+        <div class="size">
             <ruby>Site
                 <rt>サイト</rt>
             </ruby>
@@ -200,8 +74,106 @@
         </div>
     </div>
 </div>
+<!--<div style="filter:url(#BlendFilter);position: absolute;top:20px;left:30px;z-index:111;">
+    <div style="background:green;width:100px;height:100px;"></div>
+    <div style="margin-top:-20px;background:green;width:100px;height:100px;transform:translate(40px,0)"></div>
+</div>-->
+<!--<div style="width:100px;height:100px;transform:translate(100px,100px);background:blue;border-radius: 50%;">-->
+
+<!--</div>-->
+<svg viewBox="0 0 400 200" style="width:400px; height:200px; visibility: hidden;">
+    <defs>
+        <filter id="BlendFilter">
+            <feGaussianBlur in="SourceGraphic"
+                            stdDeviation="10"
+                            result="GaussBlur"
+            ></feGaussianBlur>
+            <feColorMatrix in="GaussBlur"
+                           type="matrix"
+                           values="
+                           1 0 0 0 0
+                           0 1 0 0 0
+                           0 0 1 0 0
+                           0 0 0 20 -10"
+                           result="MatrixColor"
+            ></feColorMatrix>
+        </filter>
+        <filter id="DropFilter">
+            <feDropShadow in="SourceGraphic"
+                          dx="1"
+                          dy="-3"
+                          stdDeviation="0"
+                          result="DropShadow"
+                          flood-color="#fff"
+            ></feDropShadow>
+            <feBlend in="SourceGraphic" in2="DropShadow" mode="multiply"/>
+
+            <!--            <feOffset in="DropShadow" dy="0" dx="-10"></feOffset>
+                        <feGaussianBlur in="DropShadow"
+                                        stdDeviation="3"
+                        ></feGaussianBlur>-->
+        </filter>
+        <filter id="TextDropFilter">
+            <feDropShadow in="SourceGraphic"
+                          dx="0"
+                          dy="0"
+                          stdDeviation="0"
+                          result="TextLeftDropShadow"
+                          flood-color="pink"
+            ></feDropShadow>
+
+            <feDropShadow in="SourceGraphic"
+                          dx="0"
+                          dy="0"
+                          stdDeviation="2"
+                          result="TextRightDropShadow"
+                          flood-color="pink"
+            ></feDropShadow>
+
+
+            <feMerge result="MergeResult">
+                <!--                <feMergeNode in="FeBlendResult"></feMergeNode>-->
+                <!--                <feMergeNode in="TextDropShadow"></feMergeNode>-->
+                <feMergeNode in="TextLeftDropShadow"></feMergeNode>
+                <feMergeNode in="TextRightDropShadow"></feMergeNode>
+            </feMerge>
+            <feGaussianBlur in="MergeResult" result="MergeResultGaussShadow" stdDeviation="2"/>
+            <feColorMatrix in="MergeResultGaussShadow"
+                           type="matrix"
+                           result="ColorMatrixResult"
+                           values="
+                           1 0 0 0 0
+                           0 1 0 0 0
+                           0 0 1 0 0
+                           0 0 0 10 -5
+                           "
+            ></feColorMatrix>
+
+            <feBlend in="SourceGraphic" in2="ColorMatrixResult" result="BlendTextTotalResult"
+                     mode="normal"></feBlend>
+        </filter>
+        <filter id="ComputedDropShadow">
+            <feDropShadow in="SourceGraphic" result="DropShadow"
+                          stdDeviation="4"
+                          dx="0" dy="0" flood-color="#fff"/>
+            <feColorMatrix in="DropShadow" type="matrix"
+                           values="
+                           1 0 0 0 0
+                           0 1 0 0 0
+                           0 0 1 0 0
+                           0 0 0 8 -4
+                           "/>
+        </filter>
+    </defs>
+
+    <text transform="translate(0,40)"
+          font-size="40"
+          font-family="Nikkyou-sans">
+        Site Loading
+    </text>
+</svg>
 <!--<div class="mask"></div>-->
-<svg >
+<svg>
 
 </svg>
 <div id="app"></div>

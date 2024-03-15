@@ -43,6 +43,14 @@ html, body {
   font-display: block;
   src: url("../fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00") format("woff"), url("../fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00") format("woff2");
 }
+@keyframes circlePath {
+  from {
+    clip-path: circle(250% at 50% 50%);
+  }
+  to {
+    clip-path: circle(0% at 50% 50%);
+  }
+}
 .LoadingContainer {
   --loading-font-size: clamp(30px, 10vw, 6rem);
   mix-blend-mode: screen;
@@ -66,14 +74,6 @@ html, body {
   height: 220px;
   position: relative;
 }
-@keyframes aaa {
-  from {
-    transform: translate(0, 0);
-  }
-  to {
-    transform: translate(0, 166px);
-  }
-}
 .LoadingContainer .size {
   position: relative;
   display: flex;
@@ -81,7 +81,6 @@ html, body {
   overflow: hidden;
   height: 166px;
   z-index: 1;
-  /* flex-direction: column; */
 }
 .LoadingContainer .size ruby {
   font-size: var(--loading-font-size);
@@ -116,15 +115,19 @@ html, body {
   border: 0.4rem solid #fff;
   box-sizing: border-box;
   height: 50px;
-  width: var(--loading-progress);
   min-width: 100%;
-  background: #fff;
-  transition: 1s ease-in-out;
+  background: transparent;
   display: block;
 }
-.LoadingContainer .container {
-  --height: 72%;
-  clip-path: polygon(0% var(--height), 100% var(--height), 100% 100%, 0 100%);
+.LoadingContainer .loading-progress .progress:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--loading-progress);
+  transition: 1s ease-in-out;
+  background: #fff;
 }
 .LoadingContainer .loading-progress {
   position: relative;

@@ -7,54 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title class="title">%VITE_HTML_WEB_SITE_TITLE%</title>
     <link rel="preload" href="./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00" as="font" crossorigin>
-    <link rel="stylesheet" href="./styles/init.css"/>
-    <script>
-      window.setTitle = function (title, appendString) {
-        appendString = appendString || "%webSiteTitle% - ";
-        document.title = appendString + title;
-      };
-
-      function onLoad() {
-        console.log(document.body.innerHTML);
-        setLoadingState(20);
-      }
-
-      window.setLoadingState = (function () {
-        let int;
-
-        function getLoadingState() {
-          return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
-        }
-
-        const state = function (percent) {
-          const currentPercent = getLoadingState();
-          const resultPercent = Math.min(currentPercent + percent, 100);
-          requestAnimationFrame(() => {
-            document.body.style.setProperty("--loading-progress", resultPercent + "%");
-          }, 200);
-
-          // 加载完毕时
-          if (resultPercent >= 100) {
-            // document.getElementById("LoadingContainerRef").classList.add("off");
-            clearInterval(int);
-            window.setLoadingState = () => "";
-          }
-        };
-
-        int = setInterval(function () {
-          const len = getLoadingState();
-          if (len <= 70) {
-            return state(Math.floor(Math.random() * 10));
-          }
-
-          clearInterval(int);
-        }, 1000);
-
-        return state;
-      })();
-    </script>
+    <link rel="stylesheet" href="/styles/init.css"/>
+    <script type="text/javascript" src="/js/common.js"></script>
 </head>
 <body class="nikkyou-sans" onload="onLoad()">
+<span>打撒河口街道花洒尽快</span>
+<div></div>
 <div class="LoadingContainer" id="LoadingContainerRef">
     <div class="container">
         <div class="size">

@@ -50,6 +50,17 @@ html, body {
   url('../fonts/NikkyouSans-mLKax.woff2?v=20231221_000000T00') format('woff2');
 }
 
+@keyframes circlePath {
+  from {
+    clip-path: circle(250% at 50% 50%);
+  }
+  to {
+    clip-path: circle(0% at 50% 50%);
+  }
+}
+
+// animation: circlePath 3s forwards infinite alternate ease-out;
+
 .LoadingContainer {
   --loading-font-size: clamp(30px, 10vw, 6rem);
   mix-blend-mode: screen;
@@ -74,14 +85,6 @@ html, body {
     position: relative;
   }
 
-  @keyframes aaa {
-    from {
-      transform: translate(0, 0);
-    }
-    to {
-      transform: translate(0, 166px);
-    }
-  }
   /*font-weight: bold;*/
   .size {
     position: relative;
@@ -90,13 +93,6 @@ html, body {
     overflow: hidden;
     height: 166px;
     z-index: 1;
-
-    > * {
-      //animation: moveBottom 6s infinite linear;
-      //animation: aaa 1s forwards ease-in;
-    }
-
-    /* flex-direction: column; */
 
     ruby {
       font-size: var(--loading-font-size);
@@ -135,19 +131,26 @@ html, body {
       border: .4rem solid #fff;
       box-sizing: border-box;
       height: 50px;
-      width: var(--loading-progress);
       min-width: 100%;
-      background: #fff;
-      transition: 1s ease-in-out;
+      background: transparent;
       display: block;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: var(--loading-progress);
+        transition: 1s ease-in-out;
+        background:#fff;
+      }
     }
   }
 
   // 交融专门区域---------------------------------
   .container {
     //filter: url(#ComputedDropShadow);
-    --height: 72%;
-    clip-path: polygon(0% var(--height), 100% var(--height), 100% 100%, 0 100%);
   }
 
   .size {

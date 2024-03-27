@@ -1,10 +1,17 @@
-# Vue 3 + Vite
+### 項目設計に大概な方向
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+---
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## 个人站点的实验箱
-如仓库名所示......
+- `フレームワーク選定`
+```
+Vueと採用
+```
+- `国際化考慮？`
+```
+ひとまずvue-i18nを使用、一番重要なのはファイルの構築
+```
+- `ローディング　アニメ、サイト全体のUX設計`
+```
+Adobe Animate　と Adobe Illustrator　からのsvg作る 
+```
+- `サイトの基本内容`

@@ -1,26 +1,20 @@
 import { defineConfig }  from "vite";
 import vue             from "@vitejs/plugin-vue";
 import vueJsx          from "@vitejs/plugin-vue-jsx";
-// import { fontSubsetter } from "./vite-plugin/font-subsetter/dist";
-// import Unfonts from "unplugin-fonts/vite";
-// import siteConfig     from "./src/config/site.json";
-// import vike from "vike/plugin";
+import { ViteMinifyPlugin } from "vite-plugin-minify";
 
-// https://vitejs.dev/config/
 export default defineConfig(() => {
   // todo: 如果是本地部署 - 则采用sourcemap的方式, 如果是build部署, 则忽略sourcemap
+
   return {
+    build: {
+      minify: "esbuild",
+    },
     envDir: "./config",
     plugins: [
       vue(),
       vueJsx(),
-      /*transformHtmlPlugin(
-        Object.assign(
-          {},
-          siteConfig.IndexTemplateVariable,
-          siteConfig.IndexTemplateVariable[config.mode] || {}
-        )
-      ),*/
+      ViteMinifyPlugin(),
     ],
   };
 });

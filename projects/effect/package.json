@@ -38,6 +38,7 @@
     "unplugin-fonts": "^1.1.1",
     "vike": "^0.4.150",
     "vite": "^5.0.0",
+    "vite-plugin-minify": "^1.5.2",
     "vue-cli-plugin-vue-i18n": "~1.0.1"
   },
   "gitHooks": {

@@ -16,9 +16,9 @@ window.setLoadingState = (function () {
     const currentPercent = getLoadingState();
     const resultPercent = Math.min(currentPercent + percent, 100);
     requestAnimationFrame(() => {
-      document.body.style.setProperty("--loading-progress", `${resultPercent }%`);
+      document.body.style.setProperty("--loading-progress", `${resultPercent}%`);
     });
-
+    console.log("进度条：", resultPercent + "%");
     // 加载完毕时
     if (resultPercent >= 100) {
       // document.getElementById("LoadingContainerRef").classList.add("off");

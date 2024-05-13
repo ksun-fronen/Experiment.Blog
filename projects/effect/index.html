@@ -9,11 +9,70 @@
     <link rel="preload" href="./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00" as="font" crossorigin>
     <link rel="stylesheet" href="/styles/init.css"/>
     <script type="text/javascript" src="/js/common.js"></script>
+    <style>
+        .counter-radius-circle__setting > circle{
+            transition:r .2s linear;
+            will-change:r;
+            cx: 50%;
+            cy: 50%;
+        }
+    </style>
 </head>
-<body class="nikkyou-sans" onload="onLoad()">
-<span>打撒河口街道花洒尽快</span>
-<div></div>
-<div class="LoadingContainer" id="LoadingContainerRef">
+<body class="nikkyou-sans" onload="onLoad()" style="--counter-raidus: 500;">
+<!-- Unit Test -->
+<div style="font-size:50px;font-weight:bold;color: #2a9;">
+    This is site content<br/>
+    This is site content<br/>Lo
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+    This is site content<br/>
+</div>
+<!-- Unit Test -->
+
+<svg viewBox="0 0 2560 1440"
+     style="width: 2560px;display: block; position:absolute; top:0; left:0;"
+     version="1.1"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <filter x="0" y="0" width="100%" height="100%" id="BackgroundYellow">
+            <feFlood flood-color="yellow" result="bg"/>
+            <feMerge>
+                <feMergeNode in="bg"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <mask id="CircleLoopMask">
+        <g class="counter-radius-circle__setting">
+            <circle fill="#fff" style="r:calc(var(--counter-raidus))" />
+        </g>
+    </mask>
+<!--    mask="url(#CircleLoopMask)"   -->
+    <g>
+        <g>
+            <rect fill="#fff" width="100%" height="100%" />
+    <!--        <circle cx="50%" cy="50%" r="500" fill="#0aa" />-->
+            <g font-family="Nikkyou-sans, sans-serif" fill="#09d">
+                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-315,-105)" letter-spacing="50">サイト</text>
+                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-45,-105)" letter-spacing="50">ローディング</text>
+                <text x="50%" y="50%" transform="translate(-355, 0)" alignment-baseline="ideographic" font-size="100">Site Loading</text>
+            </g>
+        </g>
+    </g>
+</svg>
+<!--<div class="LoadingContainer" id="LoadingContainerRef">
     <div class="container">
         <div class="size">
             <ruby>Site
@@ -25,21 +84,18 @@
             </ruby>
             <ruby>&nbsp;</ruby>
             <ruby>....</ruby>
-            <!-- <div class="cursor"></div> -->
+            &lt;!&ndash; <div class="cursor"></div> &ndash;&gt;
         </div>
         <div class="loading-progress">
             <b class="progress"></b>
         </div>
     </div>
-</div>
-<!--<div style="filter:url(#BlendFilter);position: absolute;top:20px;left:30px;z-index:111;">
+</div>--><!--<div style="filter:url(#BlendFilter);position: absolute;top:20px;left:30px;z-index:111;">
     <div style="background:green;width:100px;height:100px;"></div>
     <div style="margin-top:-20px;background:green;width:100px;height:100px;transform:translate(40px,0)"></div>
 </div>-->
 <!--<div style="width:100px;height:100px;transform:translate(100px,100px);background:blue;border-radius: 50%;">-->
-
-<!--</div>-->
-<svg viewBox="0 0 400 200" style="width:400px; height:200px; visibility: hidden;">
+<!--</div>--><!--<svg viewBox="0 0 400 200" style="width:400px; height:200px; visibility: hidden;">
     <defs>
         <filter id="BlendFilter">
             <feGaussianBlur in="SourceGraphic"
@@ -66,10 +122,10 @@
             ></feDropShadow>
             <feBlend in="SourceGraphic" in2="DropShadow" mode="multiply"/>
 
-            <!--            <feOffset in="DropShadow" dy="0" dx="-10"></feOffset>
+            &lt;!&ndash;            <feOffset in="DropShadow" dy="0" dx="-10"></feOffset>
                         <feGaussianBlur in="DropShadow"
                                         stdDeviation="3"
-                        ></feGaussianBlur>-->
+                        ></feGaussianBlur>&ndash;&gt;
         </filter>
         <filter id="TextDropFilter">
             <feDropShadow in="SourceGraphic"
@@ -90,8 +146,8 @@
 
 
             <feMerge result="MergeResult">
-                <!--                <feMergeNode in="FeBlendResult"></feMergeNode>-->
-                <!--                <feMergeNode in="TextDropShadow"></feMergeNode>-->
+                &lt;!&ndash;                <feMergeNode in="FeBlendResult"></feMergeNode>&ndash;&gt;
+                &lt;!&ndash;                <feMergeNode in="TextDropShadow"></feMergeNode>&ndash;&gt;
                 <feMergeNode in="TextLeftDropShadow"></feMergeNode>
                 <feMergeNode in="TextRightDropShadow"></feMergeNode>
             </feMerge>
@@ -129,11 +185,7 @@
           font-family="Nikkyou-sans">
         Site Loading
     </text>
-</svg>
-<!--<div class="mask"></div>-->
-<svg>
-
-</svg>
+</svg>--><!--<div class="mask"></div>-->
 <div id="app"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_GSAP%" onload="setLoadingState(20)"

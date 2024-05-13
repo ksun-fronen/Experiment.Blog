@@ -7,9 +7,14 @@ window.setTitle = function (title, appendString) {
 
 window.setLoadingState = (function () {
   let int;
+  let start = Date.now();
 
   function getLoadingState() {
-    return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
+    try {
+      return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
+    } catch {
+      return 0;
+    }
   }
 
   const state = function (percent) {
@@ -18,12 +23,15 @@ window.setLoadingState = (function () {
     requestAnimationFrame(() => {
       document.body.style.setProperty("--loading-progress", `${resultPercent}%`);
     });
+
     console.log("进度条：", resultPercent + "%");
     // 加载完毕时
     if (resultPercent >= 100) {
       // document.getElementById("LoadingContainerRef").classList.add("off");
       clearInterval(int);
       onFinishScriptList();
+
+      console.log("加载耗时", ((Date.now() - start) / 1000) + "秒");
       window.setLoadingState = () => "";
     }
   };
@@ -40,6 +48,8 @@ window.setLoadingState = (function () {
   return state;
 })();
 
+window.setLoadingState(0);
+
 function onLoad() {
   window.setLoadingState(20);
 }
@@ -49,6 +59,8 @@ function onFinishScriptList() {
   const mask = document.getElementById("CircleLoopMask");
   const mask2 = document.getElementById("CircleLoopMask2");
   const mask3 = document.getElementById("CircleLoopMask3");
+  const textContainer = document.getElementById("textContainer");
+  const appContainer = document.getElementById("AppContainer");
   const maskContainer = mask.children[0];
   const mask2Container = mask2.children[0];
   const mask3Container = mask3.children[0];
@@ -61,6 +73,7 @@ function onFinishScriptList() {
     } else if (e.currentTarget === mask2Container) {
       mask3Container.addEventListener("animationend", _AnimationEnd);
       mask3Container.classList.add("start");
+      appContainer.classList.add("start");
       mask2Container.removeEventListener("animationend", _AnimationEnd);
     } else if (e.currentTarget === mask3Container) {
       document.getElementById("LoadingSVG").style.display = "none";
@@ -68,5 +81,6 @@ function onFinishScriptList() {
       mask3Container.removeEventListener("animationend", _AnimationEnd);
     }
   });
+  textContainer.classList.add("start");
   maskContainer.classList.add("start");
 }

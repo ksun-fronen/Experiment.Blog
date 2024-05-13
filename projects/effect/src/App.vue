@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span>App view-container</span>
     <router-view />
   </div>
 </template>
@@ -35,11 +36,9 @@ export default {
   },
   created() {
     window.setLoadingState(Number.MAX_VALUE);
-    var b = "c";
-    console.log(`a${b}b`);
   },
   mounted() {
-    console.log(this.aaa);
+
   }
 };
 </script>

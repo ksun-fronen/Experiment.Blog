@@ -8,13 +8,17 @@
   initial-value: 1;
   inherits: false;
 }
+:root {
+  --loading-animate-total-duration: .7s;
+}
+
 .counter-radius-circle__setting > circle {
   cx: 50%;
   cy: 50%;
   stroke: black;
   stroke-width: var(--counter-stroke);
   r: var(--counter-result);
-  animation: animation-ring 1s linear;
+  animation: animation-ring var(--loading-animate-total-duration) linear;
   animation-play-state: paused;
   animation-fill-mode: forwards;
 }
@@ -59,14 +63,57 @@
     r: 0;
   }
 }
+@keyframes scale-animation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+@keyframes scale-animation-reverse {
+  0% {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 .counter-ending-animation > circle {
   cx: 50%;
   cy: 50%;
-  animation: loading-end 1s linear;
+  animation: loading-end var(--loading-animate-total-duration) linear;
   animation-play-state: paused;
   animation-fill-mode: forwards;
 }
 .counter-ending-animation.start > circle {
+  animation-play-state: running;
+}
+
+.text-animation {
+  animation: scale-animation 0.4s linear;
+  animation-delay: 0.5s;
+  animation-play-state: paused;
+  animation-fill-mode: forwards;
+  transform-origin: center;
+}
+.text-animation.start {
+  animation-play-state: running;
+}
+
+.body-container-animation {
+  transform: scale(1.05);
+  opacity: 0;
+  animation: scale-animation-reverse 0.1s linear forwards;
+  animation-delay: 0.5s;
+  animation-play-state: paused;
+  transform-origin: 50vw 50vh;
+}
+.body-container-animation.start {
   animation-play-state: running;
 }
 

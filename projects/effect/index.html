@@ -22,28 +22,6 @@
     </style>
 </head>
 <body class="nikkyou-sans overflow-hidden" onload="onLoad()">
-<!-- Unit Test -->
-<div style="font-size:50px;font-weight:bold;color: #2a9;">
-    This is site content<br/>
-    This is site content<br/>Lo
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-    This is site content<br/>
-</div>
-<!-- Unit Test -->
-
 <svg class="init-loading__styles"
      id="LoadingSVG"
      version="1.1"
@@ -82,7 +60,7 @@
         <!-- 结束层使用遮罩 -->
         <g mask="url(#CircleLoopMask3)">
             <rect fill="#000" width="100%" height="100%"/>
-            <g font-family="Nikkyou-sans, sans-serif" fill="#09d">
+            <g font-family="Nikkyou-sans, sans-serif" fill="#09d" id="textContainer" class="text-animation">
                 <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-315,-105)"
                       letter-spacing="50">サイト
                 </text>
@@ -105,121 +83,7 @@
         </g>
     </g>
 </svg>
-<!--<div class="LoadingContainer" id="LoadingContainerRef">
-    <div class="container">
-        <div class="size">
-            <ruby>Site
-                <rt>サイト</rt>
-            </ruby>
-            <ruby>&nbsp;</ruby>
-            <ruby>Loading
-                <rt>ローディング</rt>
-            </ruby>
-            <ruby>&nbsp;</ruby>
-            <ruby>....</ruby>
-            &lt;!&ndash; <div class="cursor"></div> &ndash;&gt;
-        </div>
-        <div class="loading-progress">
-            <b class="progress"></b>
-        </div>
-    </div>
-</div>--><!--<div style="filter:url(#BlendFilter);position: absolute;top:20px;left:30px;z-index:111;">
-    <div style="background:green;width:100px;height:100px;"></div>
-    <div style="margin-top:-20px;background:green;width:100px;height:100px;transform:translate(40px,0)"></div>
-</div>-->
-<!--<div style="width:100px;height:100px;transform:translate(100px,100px);background:blue;border-radius: 50%;">-->
-<!--</div>--><!--<svg viewBox="0 0 400 200" style="width:400px; height:200px; visibility: hidden;">
-    <defs>
-        <filter id="BlendFilter">
-            <feGaussianBlur in="SourceGraphic"
-                            stdDeviation="10"
-                            result="GaussBlur"
-            ></feGaussianBlur>
-            <feColorMatrix in="GaussBlur"
-                           type="matrix"
-                           values="
-                           1 0 0 0 0
-                           0 1 0 0 0
-                           0 0 1 0 0
-                           0 0 0 20 -10"
-                           result="MatrixColor"
-            ></feColorMatrix>
-        </filter>
-        <filter id="DropFilter">
-            <feDropShadow in="SourceGraphic"
-                          dx="1"
-                          dy="-3"
-                          stdDeviation="0"
-                          result="DropShadow"
-                          flood-color="#fff"
-            ></feDropShadow>
-            <feBlend in="SourceGraphic" in2="DropShadow" mode="multiply"/>
-
-            &lt;!&ndash;            <feOffset in="DropShadow" dy="0" dx="-10"></feOffset>
-                        <feGaussianBlur in="DropShadow"
-                                        stdDeviation="3"
-                        ></feGaussianBlur>&ndash;&gt;
-        </filter>
-        <filter id="TextDropFilter">
-            <feDropShadow in="SourceGraphic"
-                          dx="0"
-                          dy="0"
-                          stdDeviation="0"
-                          result="TextLeftDropShadow"
-                          flood-color="pink"
-            ></feDropShadow>
-
-            <feDropShadow in="SourceGraphic"
-                          dx="0"
-                          dy="0"
-                          stdDeviation="2"
-                          result="TextRightDropShadow"
-                          flood-color="pink"
-            ></feDropShadow>
-
-
-            <feMerge result="MergeResult">
-                &lt;!&ndash;                <feMergeNode in="FeBlendResult"></feMergeNode>&ndash;&gt;
-                &lt;!&ndash;                <feMergeNode in="TextDropShadow"></feMergeNode>&ndash;&gt;
-                <feMergeNode in="TextLeftDropShadow"></feMergeNode>
-                <feMergeNode in="TextRightDropShadow"></feMergeNode>
-            </feMerge>
-            <feGaussianBlur in="MergeResult" result="MergeResultGaussShadow" stdDeviation="2"/>
-            <feColorMatrix in="MergeResultGaussShadow"
-                           type="matrix"
-                           result="ColorMatrixResult"
-                           values="
-                           1 0 0 0 0
-                           0 1 0 0 0
-                           0 0 1 0 0
-                           0 0 0 10 -5
-                           "
-            ></feColorMatrix>
-
-            <feBlend in="SourceGraphic" in2="ColorMatrixResult" result="BlendTextTotalResult"
-                     mode="normal"></feBlend>
-        </filter>
-        <filter id="ComputedDropShadow">
-            <feDropShadow in="SourceGraphic" result="DropShadow"
-                          stdDeviation="4"
-                          dx="0" dy="0" flood-color="#fff"/>
-            <feColorMatrix in="DropShadow" type="matrix"
-                           values="
-                           1 0 0 0 0
-                           0 1 0 0 0
-                           0 0 1 0 0
-                           0 0 0 8 -4
-                           "/>
-        </filter>
-    </defs>
-
-    <text transform="translate(0,40)"
-          font-size="40"
-          font-family="Nikkyou-sans">
-        Site Loading
-    </text>
-</svg>--><!--<div class="mask"></div>-->
-<div id="app"></div>
+<div id="AppContainer" class="body-container-animation"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_GSAP%" onload="setLoadingState(20)"
         crossorigin referrerpolicy="no-referrer"></script>

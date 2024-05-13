@@ -1,0 +1,91 @@
+@property --counter-radius {
+  syntax: "<integer>";
+  initial-value: 1;
+  inherits: false;
+}
+
+@property --counter-stroke {
+  syntax: "<integer>";
+  initial-value: 1;
+  inherits: false;
+}
+
+.counter-radius-circle__setting {
+  > circle {
+    //transition: all 1s linear;
+    cx: 50%;
+    cy: 50%;
+    stroke: black;
+    stroke-width: var(--counter-stroke);
+    r: var(--counter-result);
+
+    animation: animation-ring 1s linear;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+  }
+
+  .ring-1 {
+    --counter-offset: 0;
+    --counter-stroke: 5;
+    --counter-result: calc(var(--counter-radius) + 25 + var(--counter-stroke));
+  }
+
+  .ring-2 {
+    --counter-stroke: 20;
+    --counter-offset: 15;
+    --counter-result: calc(var(--counter-radius) - 5 + var(--counter-stroke));
+  }
+
+  .ring-3 {
+    --counter-result: var(--counter-radius);
+  }
+
+  &.counter__reserved-animate {
+    --counter-radius: 2590;
+    animation-iteration-count: revert;
+  }
+
+  &.start > circle {
+    animation-play-state: running;
+  }
+}
+
+@keyframes animation-ring {
+  0% {
+    --counter-radius: 3000;
+  }
+
+  95% {
+    --counter-radius: 0;
+    --counter-stroke: calc(5 + var(--counter-offset))
+  }
+
+  100% {
+    --counter-stroke: 0;
+  }
+}
+
+@keyframes loading-end {
+  0% {
+    r: 3000;
+  }
+
+  100% {
+    r: 0;
+  }
+}
+
+.counter-ending-animation {
+  & > circle {
+    cx: 50%;
+    cy: 50%;
+
+    animation: loading-end 1s linear;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+  }
+
+  &.start > circle {
+    animation-play-state: running;
+  }
+}

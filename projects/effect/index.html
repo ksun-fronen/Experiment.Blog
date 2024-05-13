@@ -8,17 +8,20 @@
     <title class="title">%VITE_HTML_WEB_SITE_TITLE%</title>
     <link rel="preload" href="./fonts/NikkyouSans-mLKax.woff?v=20231221_000000T00" as="font" crossorigin>
     <link rel="stylesheet" href="/styles/init.css"/>
+    <link rel="stylesheet" href="/styles/animation.css"/>
     <script type="text/javascript" src="/js/common.js"></script>
     <style>
-        .counter-radius-circle__setting > circle{
-            transition:r .2s linear;
-            will-change:r;
-            cx: 50%;
-            cy: 50%;
+        .init-loading__styles {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
-<body class="nikkyou-sans" onload="onLoad()" style="--counter-raidus: 500;">
+<body class="nikkyou-sans overflow-hidden" onload="onLoad()">
 <!-- Unit Test -->
 <div style="font-size:50px;font-weight:bold;color: #2a9;">
     This is site content<br/>
@@ -41,8 +44,8 @@
 </div>
 <!-- Unit Test -->
 
-<svg viewBox="0 0 2560 1440"
-     style="width: 2560px;display: block; position:absolute; top:0; left:0;"
+<svg class="init-loading__styles"
+     id="LoadingSVG"
      version="1.1"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
@@ -56,18 +59,48 @@
     </defs>
     <mask id="CircleLoopMask">
         <g class="counter-radius-circle__setting">
-            <circle fill="#fff" style="r:calc(var(--counter-raidus))" />
+            <rect width="100%" height="100%" fill="#fff"/>
+            <circle class="ring-1" fill="transparent"/>
+            <circle class="ring-2" fill="transparent"/>
+            <circle class="ring-3" fill="black"/>
         </g>
     </mask>
-<!--    mask="url(#CircleLoopMask)"   -->
+    <mask id="CircleLoopMask2">
+        <g class="counter-radius-circle__setting">
+            <rect width="100%" height="100%" fill="#fff"/>
+            <circle class="ring-1" fill="transparent"/>
+            <circle class="ring-2" fill="transparent"/>
+            <circle class="ring-3" fill="black"/>
+        </g>
+    </mask>
+    <mask id="CircleLoopMask3">
+        <g class="counter-ending-animation">
+            <circle r="3000"  fill="#fff" width="100%" height="100%"></circle>
+        </g>
+    </mask>
     <g>
-        <g>
-            <rect fill="#fff" width="100%" height="100%" />
-    <!--        <circle cx="50%" cy="50%" r="500" fill="#0aa" />-->
+        <!-- 结束层使用遮罩 -->
+        <g mask="url(#CircleLoopMask3)">
+            <rect fill="#000" width="100%" height="100%"/>
             <g font-family="Nikkyou-sans, sans-serif" fill="#09d">
-                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-315,-105)" letter-spacing="50">サイト</text>
-                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-45,-105)" letter-spacing="50">ローディング</text>
-                <text x="50%" y="50%" transform="translate(-355, 0)" alignment-baseline="ideographic" font-size="100">Site Loading</text>
+                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-315,-105)"
+                      letter-spacing="50">サイト
+                </text>
+                <text font-size="30" x="50%" y="50%" alignment-baseline="ideographic" transform="translate(-45,-105)"
+                      letter-spacing="50">ローディング
+                </text>
+                <text x="50%" y="50%" transform="translate(-355, 0)" alignment-baseline="ideographic" font-size="100">
+                    Site Loading
+                </text>
+            </g>
+
+            <!-- 第一层遮罩圆 -->
+            <g mask="url(#CircleLoopMask)">
+                <rect fill="#5d9" width="100%" height="100%" id="RectContainer1"></rect>
+            </g>
+            <!-- 第二层遮罩圆 -->
+            <g mask="url(#CircleLoopMask2)">
+                <rect fill="darkred" width="100%" height="100%" id="RectContainer2"></rect>
             </g>
         </g>
     </g>

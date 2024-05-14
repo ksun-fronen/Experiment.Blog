@@ -8,7 +8,7 @@ window.setTitle = function (title, appendString) {
 window.setLoadingState = (function () {
   let int;
   let start = Date.now();
-
+  return () => ''
   function getLoadingState() {
     try {
       return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;

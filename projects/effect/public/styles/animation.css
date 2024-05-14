@@ -117,4 +117,14 @@
   animation-play-state: running;
 }
 
+.percent-rect__common {
+  --rect-dynamic-percent: 0px;
+  --rect-width: 800px;
+  --rect-height: 100px;
+  --rect-stroke: 10px;
+  --rect-offset: min(var(--rect-dynamic-percent), 790px);
+  transition: 0.2s linear;
+  clip-path: polygon(0 0, var(--rect-width) 0, var(--rect-width) var(--rect-height), 0 var(--rect-height), calc(var(--rect-stroke) + var(--rect-offset)) calc(var(--rect-height) - var(--rect-stroke)), calc(var(--rect-width) - var(--rect-stroke)) calc(var(--rect-height) - var(--rect-stroke)), calc(var(--rect-width) - var(--rect-stroke)) var(--rect-stroke), calc(var(--rect-stroke) + var(--rect-offset)) var(--rect-stroke), calc(var(--rect-stroke) + var(--rect-offset)) calc(var(--rect-height) - var(--rect-stroke)), 0 var(--rect-height));
+}
+
 /*# sourceMappingURL=animation.css.map */

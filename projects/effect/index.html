@@ -25,6 +25,7 @@
 <svg class="init-loading__styles"
      id="LoadingSVG"
      version="1.1"
+     viewBox="0 0 1920 1080"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
         <filter x="0" y="0" width="100%" height="100%" id="BackgroundYellow">
@@ -53,26 +54,11 @@
     </mask>
     <mask id="CircleLoopMask3">
         <g class="counter-ending-animation">
-            <circle r="3000" fill="#fff" width="100%" height="100%"></circle>
-        </g>
-    </mask>
-    <mask id="PercentContainerMask">
-        <g>
+            <circle cx="50%" cy="50%" r="3000" fill="#fff" width="100%" height="100%"></circle>
         </g>
     </mask>
     <clipPath id="PercentContainerPolygonMask">
         <circle r="100" fill="#000" cy="50%" cx="50%"></circle>
-<!--        <polygon  fill="#fff" points="0, 0
-                       0, 100
-                       25, 100
-                       25, 25
-                       75, 25
-                       75, 75
-                       25, 75
-                       25, 100
-                       100, 100
-                       100, 0
-            "></polygon>-->
     </clipPath>
 
     <g>
@@ -111,6 +97,22 @@
         </g>
     </g>
 </svg>
+<script type="text/javascript" id="ScriptOtherDOM">
+  (function () {
+    function setSvgViewBox() {
+      var svg = document.getElementById("LoadingSVG");
+
+      let scaleDefSettingWidth = 2080;
+      let height = scaleDefSettingWidth * window.innerHeight / window.innerWidth / window.devicePixelRatio;
+      let width = scaleDefSettingWidth / window.devicePixelRatio;
+
+      svg.setAttribute("viewBox", [0, 0, width, height].join(" "));
+    }
+    window.$$__ISUMI_SET_SVG_VIEW_BOX = setSvgViewBox;
+    setSvgViewBox();
+    window.addEventListener("resize", setSvgViewBox);
+  })();
+</script>
 <div id="AppContainer" class="body-container-animation"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap%VITE_MIN_EXTENSION%.js"
         integrity="%VITE_INTEGRITY_GSAP%" onload="setLoadingState(20)"

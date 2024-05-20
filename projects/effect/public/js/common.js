@@ -8,7 +8,7 @@ window.setTitle = function (title, appendString) {
 window.setLoadingState = (function () {
   let int;
   let start = Date.now();
-  // return () => ''
+
   function getLoadingState() {
     try {
       return parseFloat(document.body.style.getPropertyValue("--loading-progress")) || 0;
@@ -20,18 +20,29 @@ window.setLoadingState = (function () {
   const state = function (percent) {
     const currentPercent = getLoadingState();
     const resultPercent = Math.min(currentPercent + percent, 100);
-    requestAnimationFrame(() => {
-      document.body.style.setProperty("--loading-progress", `${resultPercent}%`);
-    });
-
+    let body = document.body;
+    if (body) {
+      body.style.setProperty("--loading-progress", `${resultPercent}`);
+    }
     console.log("进度条：", resultPercent + "%");
     // 加载完毕时
     if (resultPercent >= 100) {
       // document.getElementById("LoadingContainerRef").classList.add("off");
       clearInterval(int);
-      onFinishScriptList();
 
-      console.log("加载耗时", ((Date.now() - start) / 1000) + "秒");
+      // return () => ''
+
+      let totalLoadTimeout = (Date.now() - start) / 1000;
+
+      /*if (totalLoadTimeout < 0.2) {
+        // 小于0.5的加载时间就直接过了
+        document.getElementById("AppContainer").classList.remove("body-container-animation");
+        document.getElementById("LoadingSVG").remove();
+
+        return;
+      }*/
+      onFinishScriptList(totalLoadTimeout < 0.5 ? "Skip" : "");
+      console.log("加载耗时", totalLoadTimeout + "秒");
       window.setLoadingState = () => "";
     }
   };
@@ -55,8 +66,8 @@ function onLoad() {
 }
 
 // script加载全部完成时候
-function onFinishScriptList() {
-  // todo: 加入按钮控制
+function onFinishScriptList(stepType) {
+  // todo: 按钮3D化需要做
 
   const mask = document.getElementById("CircleLoopMask");
   const mask2 = document.getElementById("CircleLoopMask2");
@@ -66,8 +77,13 @@ function onFinishScriptList() {
   const maskContainer = mask.children[0];
   const mask2Container = mask2.children[0];
   const mask3Container = mask3.children[0];
+  let proxy = maskContainer;
+
+  if (stepType === "Skip") {
+    proxy = mask3Container;
+  }
   // maskContainer容器的动画结束时
-  maskContainer.addEventListener("animationend", function _AnimationEnd(e) {
+  proxy.addEventListener("animationend", function _AnimationEnd(e) {
     if (e.currentTarget === maskContainer) {
       mask2Container.addEventListener("animationend", _AnimationEnd);
       mask2Container.classList.add("start");
@@ -83,9 +99,12 @@ function onFinishScriptList() {
       mask3Container.removeEventListener("animationend", _AnimationEnd);
       window.removeEventListener("resize", window.$$__ISUMI_SET_SVG_VIEW_BOX);
       delete window.$$__ISUMI_SET_SVG_VIEW_BOX;
-      document.getElementById('ScriptOtherDOM').remove();
+      document.getElementById("ScriptOtherDOM").remove();
     }
   });
   textContainer.classList.add("start");
-  maskContainer.classList.add("start");
+  proxy.classList.add("start");
+  if(proxy === mask3Container){
+    appContainer.classList.add("start");
+  }
 }

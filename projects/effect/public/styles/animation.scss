@@ -144,7 +144,7 @@
 
 .percent-rect__common {
   // 偏移量
-  --rect-dynamic-percent: 0px;
+  --rect-dynamic-percent: calc(790px * var(--loading-progress) / 100);
 
   --rect-width: 800px;
   --rect-height: 100px;
@@ -152,7 +152,7 @@
   --rect-offset: min(var(--rect-dynamic-percent), 790px);
 
 
-  transition: .2s linear;
+  transition: .4s linear;
   //noinspection CssInvalidFunction
   clip-path: polygon(
       0 0,

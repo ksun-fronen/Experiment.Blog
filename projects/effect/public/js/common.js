@@ -62,6 +62,10 @@ window.setLoadingState = (function () {
 window.setLoadingState(0);
 
 function onLoad() {
+  if (document.documentElement.getAttribute("animation-startup") !== "Closed") {
+    document.getElementById("LoadingSVG").style.opacity = 1;
+  }
+
   window.setLoadingState(20);
 }
 
@@ -82,7 +86,21 @@ function onFinishScriptList(stepType) {
   if (stepType === "Skip") {
     proxy = mask3Container;
   }
-  // maskContainer容器的动画结束时
+
+  function _startupApplication() {
+    document.getElementById("LoadingSVG").style.display = "none";
+    document.body.classList.remove("overflow-hidden");
+    window.removeEventListener("resize", window.$$__ISUMI_SET_SVG_VIEW_BOX);
+    appContainer.classList.remove("body-container-animation");
+    delete window.$$__ISUMI_SET_SVG_VIEW_BOX;
+    document.getElementById("ScriptOtherDOM").remove();
+  }
+
+  if (document.documentElement.getAttribute("animation-startup") === "Closed") {
+    return _startupApplication();
+  }
+
+// maskContainer容器的动画结束时
   proxy.addEventListener("animationend", function _AnimationEnd(e) {
     if (e.currentTarget === maskContainer) {
       mask2Container.addEventListener("animationend", _AnimationEnd);
@@ -94,17 +112,13 @@ function onFinishScriptList(stepType) {
       appContainer.classList.add("start");
       mask2Container.removeEventListener("animationend", _AnimationEnd);
     } else if (e.currentTarget === mask3Container) {
-      document.getElementById("LoadingSVG").style.display = "none";
-      document.body.classList.remove("overflow-hidden");
+      _startupApplication();
       mask3Container.removeEventListener("animationend", _AnimationEnd);
-      window.removeEventListener("resize", window.$$__ISUMI_SET_SVG_VIEW_BOX);
-      delete window.$$__ISUMI_SET_SVG_VIEW_BOX;
-      document.getElementById("ScriptOtherDOM").remove();
     }
   });
   textContainer.classList.add("start");
   proxy.classList.add("start");
-  if(proxy === mask3Container){
+  if (proxy === mask3Container) {
     appContainer.classList.add("start");
   }
 }

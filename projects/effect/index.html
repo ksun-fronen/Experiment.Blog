@@ -1,6 +1,6 @@
 <!doctype html>
 <!--suppress ALL -->
-<html lang="en">
+<html lang="en" animation-startup="%VITE_OPEN_LOADING_ANIMATE%">
 <head>
     <meta charset="UTF-8"/>
     <link rel="icon" type="image/png" href="/favicon.png"/>
@@ -24,6 +24,7 @@
 <body class="nikkyou-sans overflow-hidden" onload="onLoad()">
 <svg class="init-loading__styles"
      id="LoadingSVG"
+     style="opacity: 0;"
      version="1.1"
      viewBox="0 0 1920 1080"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -108,6 +109,7 @@
 
       svg.setAttribute("viewBox", [0, 0, width, height].join(" "));
     }
+
     window.$$__ISUMI_SET_SVG_VIEW_BOX = setSvgViewBox;
     setSvgViewBox();
     window.addEventListener("resize", setSvgViewBox);
@@ -122,6 +124,6 @@
         integrity="%VITE_INTEGRITY_PIXI%" onload="setLoadingState(20)"
         crossorigin referrerpolicy="no-referrer"></script>
 <!--%-VITE_SOURCE_MAP_PIXI-%-->
-<script async type="module" src="/src/main.js" onload="setLoadingState(20)"></script>
+<script async type="module" src="/src/main.ts" onload="setLoadingState(100)"></script>
 </body>
 </html>

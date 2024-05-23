@@ -12,7 +12,6 @@
   "dependencies": {
     "@connorrose/eslint-plugin-prettier": "^3.1.4",
     "@operation_code/eslint-plugin-custom-rules": "^1.0.1",
-    "@szjyp226/eslint-plugin": "^1.0.9",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     "eslint-plugin-jquery": "^1.5.1",
     "gsap": "^3.12.3",

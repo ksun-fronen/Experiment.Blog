@@ -12,6 +12,10 @@
   ],
   "license": "ISC",
   "devDependencies": {
+    "@szjyp226/eslint-plugin": "^1.0.12",
     "nx": "17.2.7"
+  },
+  "dependencies": {
+    "eslint-import-resolver-vite": "^2.0.1"
   }
 }

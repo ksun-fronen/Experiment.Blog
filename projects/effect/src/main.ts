@@ -1,11 +1,11 @@
-import { createApp }   from "vue";
 import "./style.css";
-import App           from "./App.vue";
+import * as Vue from "vue";
+import App from "./App.vue";
+import store from "./store";
 import router from "./config/router.js";
-import store         from "./store";
 import { installI18n } from "./lang";
 
-const app = createApp(App);
+const app = Vue.createApp(App);
 installI18n(app);
 app
   .use(store)

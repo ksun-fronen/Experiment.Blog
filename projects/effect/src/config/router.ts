@@ -1,17 +1,16 @@
-import * as Router from "vue-router";
+import * as Router           from "vue-router";
 
-const routerDirections = import.meta.glob<{default: any}>("../router/**/*.ts", {
+const routerDirections = import.meta.glob<UseDefinition.Router.RouteRecordRaw>("../router/**/*.ts", {
   eager: true,
+  import: "default",
 });
 
 const router = Router.createRouter({
   history: Router.createWebHistory(),
   routes: Object.keys(routerDirections).map((routerModuleProp) => {
-    return routerDirections[routerModuleProp].default || [];
+    return routerDirections[routerModuleProp] || [];
   }).flat(),
 });
-console.log("router", router.getRoutes());
-
 
 // todo 需要给meta定义一个模型
 router.afterEach((to, from) => {

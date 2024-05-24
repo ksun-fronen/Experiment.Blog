@@ -1,15 +1,9 @@
 module.exports = {
-  "extends": [
+  extends: [
     "plugin:@szjyp226/vue3-typescript",
   ],
   ignorePatterns: [
-    "vite.config.js"
+    "vite.config.js",
+    "*.d.ts",
   ],
-  settings: {
-    /*"import/resolver": {
-      vite: {
-        viteConfig: viteConfig,
-      }
-    }*/
-  }
 };

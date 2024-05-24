@@ -3,6 +3,8 @@
     "target": "esnext",
     "module": "esnext",
     "strict": true,
+    "declaration": true,
+    "declarationDir": "./types",
     "jsx": "preserve",
     "moduleResolution": "node",
     "skipLibCheck": true,
@@ -16,6 +18,7 @@
       "webpack-env",
       "jest",
       "vite/client",
+      "./types/index"
     ],
     "paths": {
       "@/*": [

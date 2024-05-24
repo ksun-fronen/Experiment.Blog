@@ -3,10 +3,10 @@ import * as Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./config/router.js";
-import { installI18n } from "./lang";
+import * as i18nModule from "./lang";
 
 const app = Vue.createApp(App);
-installI18n(app);
+i18nModule.installI18n(app);
 app
   .use(store)
   .use(router)

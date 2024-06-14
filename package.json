@@ -13,9 +13,15 @@
   "license": "ISC",
   "devDependencies": {
     "@szjyp226/eslint-plugin": "^1.0.12",
-    "nx": "17.2.7"
+    "autoprefixer": "^10.4.19",
+    "nx": "17.2.7",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4"
   },
   "dependencies": {
-    "eslint-import-resolver-vite": "^2.0.1"
+    "@types/three": "^0.165.0",
+    "@types/vue": "^2.0.0",
+    "eslint-import-resolver-vite": "^2.0.1",
+    "three": "^0.165.0"
   }
 }

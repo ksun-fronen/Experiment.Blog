@@ -1,9 +1,11 @@
-import * as Router           from "vue-router";
+import * as Router from "vue-router";
 
 const routerDirections = import.meta.glob<UseDefinition.Router.RouteRecordRaw>("../router/**/*.ts", {
   eager: true,
   import: "default",
 });
+
+console.log("routerDirections", routerDirections);
 
 const router = Router.createRouter({
   history: Router.createWebHistory(),

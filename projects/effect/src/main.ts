@@ -3,11 +3,14 @@ import * as Vue from "vue";
 import App from "./App.vue";
 import store from "./store";
 import router from "./config/router.js";
-import * as i18nModule from "./lang";
+import i18n from "./lang";
 
 const app = Vue.createApp(App);
-i18nModule.installI18n(app);
+
 app
   .use(store)
   .use(router)
+  .use(i18n)
   .mount("#AppContainer");
+
+window.$$application = app;

@@ -35,14 +35,7 @@ const getLocale = () => {
   return "zh-cn";
 };
 
-const i18n = createI18n({
+export default createI18n({
   locale: getLocale(),
   messages,
 });
-
-// export default i18n
-export function installI18n(app: App<Element>): App<Element> {
-  app.use(i18n);
-
-  return app;
-}

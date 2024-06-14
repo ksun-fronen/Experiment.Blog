@@ -1,8 +1,8 @@
-import { defineConfig }  from "vite";
-import vue             from "@vitejs/plugin-vue";
-import vueJsx          from "@vitejs/plugin-vue-jsx";
-import { ViteMinifyPlugin } from "vite-plugin-minify";
-import path from "path";
+import {defineConfig}     from "vite";
+import vue                from "@vitejs/plugin-vue";
+import vueJsx             from "@vitejs/plugin-vue-jsx";
+import {ViteMinifyPlugin} from "vite-plugin-minify";
+import path               from "path";
 
 export default defineConfig(() => {
   // todo: 如果是本地部署 - 则采用sourcemap的方式, 如果是build部署, 则忽略sourcemap
@@ -23,7 +23,10 @@ export default defineConfig(() => {
         {
           find: "@",
           replacement: path.resolve("./src"),
-        },
+        }, {
+          find: "@modules",
+          replacement: path.resolve("./src/modules"),
+        }
       ],
     },
   };

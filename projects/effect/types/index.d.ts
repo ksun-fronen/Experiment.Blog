@@ -1,7 +1,10 @@
-declare namespace UseDefinition {
-    export * as Router from 'vue-router';
-}
+import './useDefinition';
+import './shims-vue';
 
 declare global {
-    export default UseDefinition;
+    interface Window {
+        $$application: any;
+    }
 }
+
+declare const window: Window

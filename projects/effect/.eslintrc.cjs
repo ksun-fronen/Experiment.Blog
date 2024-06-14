@@ -3,7 +3,11 @@ module.exports = {
     "plugin:@szjyp226/vue3-typescript",
   ],
   ignorePatterns: [
-    "vite.config.js",
     "*.d.ts",
+    "tsconfig.json",
+    "*.config.js",
   ],
+  rules:{
+    "no-undef": "off"
+  }
 };

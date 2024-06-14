@@ -1,7 +1,7 @@
 import { RouterView } from "vue-router";
 
 /* 首页路由 */
-export default [/*
+export default [
   {
     children: [ {
       component: () => import("@/views/home/index.vue"),
@@ -10,4 +10,4 @@ export default [/*
     component: RouterView,
     path: "/",
   },
-*/];
+];

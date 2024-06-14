@@ -1,4 +1,6 @@
 /* eslint-disable */
+(function (){
+const AnimationIsClosed = document.documentElement.getAttribute('animation-startup') === "Closed";
 
 window.setTitle = function (title, appendString) {
   appendString = appendString || "%webSiteTitle% - ";
@@ -61,9 +63,9 @@ window.setLoadingState = (function () {
 
 window.setLoadingState(0);
 
-function onLoad() {
-  if (document.documentElement.getAttribute("animation-startup") !== "Closed") {
-    document.getElementById("LoadingSVG").style.opacity = 1;
+document.body.onload = function onLoad() {
+  if (!AnimationIsClosed) {
+    document.getElementById("LoadingSVG").style.opacity = '1';
   }
 
   window.setLoadingState(20);
@@ -96,7 +98,7 @@ function onFinishScriptList(stepType) {
     document.getElementById("ScriptOtherDOM").remove();
   }
 
-  if (document.documentElement.getAttribute("animation-startup") === "Closed") {
+  if (AnimationIsClosed) {
     return _startupApplication();
   }
 
@@ -122,3 +124,5 @@ function onFinishScriptList(stepType) {
     appContainer.classList.add("start");
   }
 }
+
+})();

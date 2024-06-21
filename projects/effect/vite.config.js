@@ -8,6 +8,9 @@ export default defineConfig(() => {
   // todo: 如果是本地部署 - 则采用sourcemap的方式, 如果是build部署, 则忽略sourcemap
 
   return {
+    server: {
+      host: true,
+    },
     build: {
       minify: "esbuild",
     },
@@ -16,6 +19,9 @@ export default defineConfig(() => {
       vue(),
       vueJsx(),
       ViteMinifyPlugin(),
+    ],
+    assetsInclude: [
+      "**/*.gltf"
     ],
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".json"],

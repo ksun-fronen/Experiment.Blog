@@ -5,8 +5,6 @@ const routerDirections = import.meta.glob<UseDefinition.Router.RouteRecordRaw>("
   import: "default",
 });
 
-console.log("routerDirections", routerDirections);
-
 const router = Router.createRouter({
   history: Router.createWebHistory(),
   routes: Object.keys(routerDirections).map((routerModuleProp) => {

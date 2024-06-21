@@ -6,6 +6,7 @@ module.exports = {
     "*.d.ts",
     "tsconfig.json",
     "*.config.js",
+    "public/**/*"
   ],
   rules:{
     "no-undef": "off"

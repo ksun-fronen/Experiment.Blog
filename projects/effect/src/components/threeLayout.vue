@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ref } from "vue";
 
 const canvasLayoutRef = ref();
-console.log("canvasLayoutRef", THREE, canvasLayoutRef);
+const loader = new GLTFLoader();
+// console.log("canvasLayoutRef", THREE, canvasLayoutRef, "loader", loader);
+
+loader.load("/assets/sketch-fab_common-models/scene.gltf?raw", (gltf) => {
+  console.log("gltf", gltf);
+});
 </script>
 
 <template>

@@ -1,15 +1,6 @@
-<template>
-  <div>
-    <ThreeLayout />
-    <span>{{ a }}</span>
-  </div>
-</template>
+<template><ThreeLayout /></template>
 
-<script setup lang="ts">
-import ThreeLayout from "@/components/threeLayout.vue";
-
-const a = 5;
-</script>
+<script setup lang="ts">import ThreeLayout from "@/components/threeLayout.vue"; </script>
 
 <style scoped>
 

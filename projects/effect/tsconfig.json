@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationDir": "./types",
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -41,6 +41,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "public/**/*"
   ]
 }

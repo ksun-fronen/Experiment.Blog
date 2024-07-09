@@ -10,6 +10,11 @@ import { TexturePass } from "three/addons/postprocessing/TexturePass.js";
 import { CubeTexturePass } from "three/addons/postprocessing/CubeTexturePass.js";
 import { ClearPass } from "three/examples/jsm/postprocessing/ClearPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { AnimationMixer } from "three/src/animation/AnimationMixer.js";
+import { AnimationAction } from "three/src/animation/AnimationAction.js";
+import { AnimationClip } from "three";
+
+window.gsap.registerPlugin(ScrollTrigger);
 
 const canvasLayoutRef: Ref<HTMLElement | undefined> = ref();
 const loader = new GLTFLoader();
@@ -18,6 +23,10 @@ const loader = new GLTFLoader();
 // console.log("girlModelAsset", girlModelAsset);
 
 let isDestroyed = false;
+let mixer: AnimationMixer;
+let clip: AnimationClip;
+let cubeClipAction: AnimationAction;
+const clock = new THREE.Clock();
 
 onMounted(() => {
   const scene = new THREE.Scene();
@@ -35,11 +44,10 @@ onMounted(() => {
   renderer.setAnimationLoop(animate);
   camera.position.set(0, 120, 120);
   // 官方例子导入
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  // renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 
   const params = {
-
     clearPass: true,
     clearColor: "white",
     clearAlpha: 1.0,
@@ -65,7 +73,7 @@ onMounted(() => {
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 2);
   hemiLight.color.setHSL(0.6, 1, 0.6);
   hemiLight.groundColor.setHSL(0.095, 1, 0.75);
-  hemiLight.position.set(0, 50, 0);
+  hemiLight.position.set(50, 150, 80);
   scene.add(hemiLight);
 
   const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
@@ -105,24 +113,40 @@ onMounted(() => {
     console.error(error);
   }); */
   loader.load("/assets/my-cube/extend_cube.gltf", (gltf) => {
-    console.log("gltf", gltf.scene);
+    const model = gltf.scene;
+
+    mixer = new THREE.AnimationMixer(model);
+    cubeClipAction = mixer.clipAction(gltf.animations[0]);
+    cubeClipAction.play();
+
+    clip = cubeClipAction.getClip();
+
     // eslint-disable-next-line no-multi-assign,no-param-reassign
-    gltf.scene.scale.x = gltf.scene.scale.y = gltf.scene.scale.z = 30;
-    scene.add(gltf.scene);
+    model.scale.x = model.scale.y = model.scale.z = 30;
+    model.position.y = 100;
+    model.position.x = -100;
+    scene.add(model);
     // render();
   }, undefined, console.error);
 
   if (canvasLayoutRef.value) {
-    canvasLayoutRef.value.appendChild(renderer.domElement);
+    const canvas = renderer.domElement;
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvasLayoutRef.value.appendChild(canvas);
   }
 
   // 摄像头控制
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.addEventListener("change", render); // use if there is no animation loop
-  controls.minDistance = 100;
-  controls.maxDistance = 1000;
-  controls.target.set(0, 30, 0);
-  controls.update();
+  function openControls() {
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.addEventListener("change", render); // use if there is no animation loop
+    controls.minDistance = 100;
+    controls.maxDistance = 1000;
+    controls.target.set(50, 150, 80);
+    controls.update();
+  }
+  // openControls();
 
   window.addEventListener("resize", onResize);
 
@@ -141,12 +165,72 @@ onMounted(() => {
     composer.render();
   }
 
+  function mixerRender(delta: number) {
+    if (mixer) {
+      mixer.update(delta);
+    }
+  }
+
   function animate() {
     if (isDestroyed) return;
+    const delta = clock.getDelta();
+
     render();
+    // mixerRender(delta);
   }
   animate();
+
+
+  const gsapModel = {
+    process: 0,
+  };
+
+  function setGsap() {
+    gsap.to(gsapModel, {
+      process: 1,
+      duration: 2,
+      scrollTrigger: {
+        trigger: canvasLayoutRef.value,
+        start: "top top",
+        end: "bottom",
+        scrub: true,
+        markers: true,
+        onUpdate: () => {
+          mixer.setTime(clip.duration * gsapModel.process);
+          // console.log("self", self);
+        },
+      },
+    });
+  }
+
+  setGsap();
 });
+
+const gsapModel = {
+  process: 0,
+};
+
+function seekAnimationTime(animMixer: any, timeInSeconds: number) {
+  // const delta = clock.getDelta();
+  gsapModel.process %= clip.duration;
+  window.gsap.to(gsapModel, {
+    process: gsapModel.process + 0.5,
+    duration: 2,
+    onUpdate: () => {
+      animMixer.setTime(clip.duration * gsapModel.process);
+    },
+  });
+
+  // animMixer.update(2);
+}
+
+function onFramePlay() {
+  if (mixer) {
+    // cubeClipAction?.();
+    // mixer.update(1);
+    seekAnimationTime(mixer);
+  }
+}
 
 onUnmounted(() => {
   isDestroyed = true;
@@ -154,12 +238,18 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="canvasLayoutRef"
-       class="h-[100vh] w-[100vw]">
-       <!--
-         <canvas ref="canvasLayoutRef"
-         class="h-[100vh] w-[100vw]" />
-       -->
+  <div class="h-[1500px]">
+    <div ref="canvasLayoutRef"
+         class="h-[100vh] w-fill">
+    <!--
+      <canvas ref="canvasLayoutRef"
+      class="h-[100vh] w-[100vw]" />
+    -->
+    </div>
+    <div class="absolute left-0 top-0 z-index-[100]">
+      <a class="bg-[#000] flex items-center p-2 rounded-2xl select-none text-white"
+         @click="onFramePlay">逐帧播放</a>
+    </div>
   </div>
 </template>
 

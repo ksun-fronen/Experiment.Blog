@@ -8,18 +8,13 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0,
-                1
+                0
             ]
         }
     ],
     "nodes" : [
         {
             "mesh" : 0,
-            "name" : "\u5e73\u9762"
-        },
-        {
-            "mesh" : 1,
             "name" : "Cube",
             "translation" : [
                 0,
@@ -34,7 +29,7 @@
                 {
                     "sampler" : 0,
                     "target" : {
-                        "node" : 1,
+                        "node" : 0,
                         "path" : "translation"
                     }
                 }
@@ -42,28 +37,14 @@
             "name" : "CubeAction",
             "samplers" : [
                 {
-                    "input" : 8,
+                    "input" : 4,
                     "interpolation" : "LINEAR",
-                    "output" : 9
+                    "output" : 5
                 }
             ]
         }
     ],
     "materials" : [
-        {
-            "doubleSided" : true,
-            "name" : "\u6750\u8d28",
-            "pbrMetallicRoughness" : {
-                "baseColorFactor" : [
-                    0.09850365668535233,
-                    0.09850365668535233,
-                    0.09850365668535233,
-                    1
-                ],
-                "metallicFactor" : 0,
-                "roughnessFactor" : 0.5
-            }
-        },
         {
             "doubleSided" : true,
             "name" : "Material",
@@ -81,7 +62,7 @@
     ],
     "meshes" : [
         {
-            "name" : "\u5e73\u9762",
+            "name" : "Cube",
             "primitives" : [
                 {
                     "attributes" : {
@@ -93,59 +74,11 @@
                     "material" : 0
                 }
             ]
-        },
-        {
-            "name" : "Cube",
-            "primitives" : [
-                {
-                    "attributes" : {
-                        "POSITION" : 4,
-                        "NORMAL" : 5,
-                        "TEXCOORD_0" : 6
-                    },
-                    "indices" : 7,
-                    "material" : 1
-                }
-            ]
         }
     ],
     "accessors" : [
         {
             "bufferView" : 0,
-            "componentType" : 5126,
-            "count" : 4,
-            "max" : [
-                25,
-                0,
-                25
-            ],
-            "min" : [
-                -25,
-                0,
-                -25
-            ],
-            "type" : "VEC3"
-        },
-        {
-            "bufferView" : 1,
-            "componentType" : 5126,
-            "count" : 4,
-            "type" : "VEC3"
-        },
-        {
-            "bufferView" : 2,
-            "componentType" : 5126,
-            "count" : 4,
-            "type" : "VEC2"
-        },
-        {
-            "bufferView" : 3,
-            "componentType" : 5123,
-            "count" : 6,
-            "type" : "SCALAR"
-        },
-        {
-            "bufferView" : 4,
             "componentType" : 5126,
             "count" : 4340,
             "max" : [
@@ -161,25 +94,25 @@
             "type" : "VEC3"
         },
         {
-            "bufferView" : 5,
+            "bufferView" : 1,
             "componentType" : 5126,
             "count" : 4340,
             "type" : "VEC3"
         },
         {
-            "bufferView" : 6,
+            "bufferView" : 2,
             "componentType" : 5126,
             "count" : 4340,
             "type" : "VEC2"
         },
         {
-            "bufferView" : 7,
+            "bufferView" : 3,
             "componentType" : 5123,
             "count" : 11244,
             "type" : "SCALAR"
         },
         {
-            "bufferView" : 8,
+            "bufferView" : 4,
             "componentType" : 5126,
             "count" : 60,
             "max" : [
@@ -191,7 +124,7 @@
             "type" : "SCALAR"
         },
         {
-            "bufferView" : 9,
+            "bufferView" : 5,
             "componentType" : 5126,
             "count" : 60,
             "type" : "VEC3"
@@ -200,66 +133,42 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 48,
+            "byteLength" : 52080,
             "byteOffset" : 0,
             "target" : 34962
         },
         {
             "buffer" : 0,
-            "byteLength" : 48,
-            "byteOffset" : 48,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 32,
-            "byteOffset" : 96,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 12,
-            "byteOffset" : 128,
-            "target" : 34963
-        },
-        {
-            "buffer" : 0,
             "byteLength" : 52080,
-            "byteOffset" : 140,
-            "target" : 34962
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 52080,
-            "byteOffset" : 52220,
+            "byteOffset" : 52080,
             "target" : 34962
         },
         {
             "buffer" : 0,
             "byteLength" : 34720,
-            "byteOffset" : 104300,
+            "byteOffset" : 104160,
             "target" : 34962
         },
         {
             "buffer" : 0,
             "byteLength" : 22488,
-            "byteOffset" : 139020,
+            "byteOffset" : 138880,
             "target" : 34963
         },
         {
             "buffer" : 0,
             "byteLength" : 240,
-            "byteOffset" : 161508
+            "byteOffset" : 161368
         },
         {
             "buffer" : 0,
             "byteLength" : 720,
-            "byteOffset" : 161748
+            "byteOffset" : 161608
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 162468,
+            "byteLength" : 162328,
             "uri" : "extend_cube.bin"
         }
     ]

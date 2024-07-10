@@ -37,13 +37,16 @@ onMounted(() => {
   const _aspect = width / height;
   const devicePixelRatio = window.devicePixelRatio || 1;
   const camera = new THREE.PerspectiveCamera(75, _aspect, 0.1, 1000);
+  const gsapModel = {
+    process: 0,
+  };
 
   renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(width, height);
-
   renderer.setAnimationLoop(animate);
+
   camera.position.set(0, 120, 120);
-  // 官方例子导入
+  // 暂时不了解这一句
   // renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 
@@ -63,44 +66,45 @@ onMounted(() => {
 
   const composer = new EffectComposer(renderer);
 
-  const clearPass = new ClearPass(params.clearColor, params.clearAlpha);
-  composer.addPass(clearPass);
-  let cubeTexturePassP;
-  const texturePass = new TexturePass();
-  composer.addPass(texturePass);
+  // 创建背景图
+  function createSceneBackground() {
+    const clearPass = new ClearPass(params.clearColor, params.clearAlpha);
+    const texturePass = new TexturePass();
+    const renderPass = new RenderPass(scene, camera);
+    let cubeTexturePassP;
+    composer.addPass(clearPass);
+    composer.addPass(texturePass);
+    renderPass.clear = false;
+    composer.addPass(renderPass);
+
+    const outputPass = new OutputPass();
+    composer.addPass(outputPass);
+
+    const genCubeUrls = function (prefix: any, postfix: any) {
+      return [
+        `${prefix}px${postfix}`, `${prefix}nx${postfix}`,
+        `${prefix}py${postfix}`, `${prefix}ny${postfix}`,
+        `${prefix}pz${postfix}`, `${prefix}nz${postfix}`,
+      ];
+    };
+    const ldrUrls = genCubeUrls("/assets/textures/cube/pisa/", ".png");
+    new THREE.CubeTextureLoader().load(ldrUrls, (ldrCubeMap) => {
+      cubeTexturePassP = new CubeTexturePass(camera, ldrCubeMap);
+      composer.insertPass(cubeTexturePassP, 2);
+    });
+  }
 
   // 光源
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 2);
-  hemiLight.color.setHSL(0.6, 1, 0.6);
-  hemiLight.groundColor.setHSL(0.095, 1, 0.75);
-  hemiLight.position.set(50, 150, 80);
-  scene.add(hemiLight);
+  function createLight() {
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 2);
+    hemiLight.color.setHSL(0.6, 1, 0.6);
+    hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+    hemiLight.position.set(50, 150, 80);
+    scene.add(hemiLight);
 
-  const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
-  scene.add(hemiLightHelper);
-
-
-  const genCubeUrls = function (prefix: any, postfix: any) {
-    return [
-      `${prefix}px${postfix}`, `${prefix}nx${postfix}`,
-      `${prefix}py${postfix}`, `${prefix}ny${postfix}`,
-      `${prefix}pz${postfix}`, `${prefix}nz${postfix}`,
-    ];
-  };
-  const ldrUrls = genCubeUrls("/assets/textures/cube/pisa/", ".png");
-  new THREE.CubeTextureLoader().load(ldrUrls, (ldrCubeMap) => {
-    cubeTexturePassP = new CubeTexturePass(camera, ldrCubeMap);
-    composer.insertPass(cubeTexturePassP, 2);
-  });
-
-  const renderPass = new RenderPass(scene, camera);
-  renderPass.clear = false;
-  composer.addPass(renderPass);
-
-  const outputPass = new OutputPass();
-  composer.addPass(outputPass);
-
-  // const textureLoader = new THREE.TextureLoader();
+    const hemiLightHelper = new THREE.HemisphereLightHelper(hemiLight, 10);
+    scene.add(hemiLightHelper);
+  }
 
   // 设置渲染容器的实际大小
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -138,7 +142,7 @@ onMounted(() => {
   }
 
   // 摄像头控制
-  function openControls() {
+  function createControls() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.addEventListener("change", render); // use if there is no animation loop
     controls.minDistance = 100;
@@ -146,9 +150,6 @@ onMounted(() => {
     controls.target.set(50, 150, 80);
     controls.update();
   }
-  // openControls();
-
-  window.addEventListener("resize", onResize);
 
   function onResize() {
     const _width = window.innerWidth;
@@ -160,15 +161,15 @@ onMounted(() => {
     composer.setSize(_width, _height);
   }
 
-  function render() {
-    renderer.render(scene, camera);
-    composer.render();
-  }
-
   function mixerRender(delta: number) {
     if (mixer) {
       mixer.update(delta);
     }
+  }
+
+  function render() {
+    renderer.render(scene, camera);
+    composer.render();
   }
 
   function animate() {
@@ -178,12 +179,6 @@ onMounted(() => {
     render();
     // mixerRender(delta);
   }
-  animate();
-
-
-  const gsapModel = {
-    process: 0,
-  };
 
   function setGsap() {
     gsap.to(gsapModel, {
@@ -203,7 +198,12 @@ onMounted(() => {
     });
   }
 
+  createLight();
+  createSceneBackground();
+  // createControls();
+  animate();
   setGsap();
+  window.addEventListener("resize", onResize);
 });
 
 const gsapModel = {

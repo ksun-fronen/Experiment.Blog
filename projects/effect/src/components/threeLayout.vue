@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, Ref, ref } from "vue";
 import * as THREE from "three";
+import { AnimationClip, PerspectiveCamera } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
@@ -12,7 +13,6 @@ import { ClearPass } from "three/examples/jsm/postprocessing/ClearPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import { AnimationMixer } from "three/src/animation/AnimationMixer.js";
 import { AnimationAction } from "three/src/animation/AnimationAction.js";
-import { AnimationClip } from "three";
 
 window.gsap.registerPlugin(ScrollTrigger);
 
@@ -25,7 +25,9 @@ const loader = new GLTFLoader();
 let isDestroyed = false;
 let mixer: AnimationMixer;
 let clip: AnimationClip;
+let cameraClip: AnimationClip;
 let cubeClipAction: AnimationAction;
+let cameraClipAction: AnimationAction;
 const clock = new THREE.Clock();
 
 onMounted(() => {
@@ -36,11 +38,13 @@ onMounted(() => {
   const height = window.innerHeight || 1;
   const _aspect = width / height;
   const devicePixelRatio = window.devicePixelRatio || 1;
-  const camera = new THREE.PerspectiveCamera(75, _aspect, 0.1, 1000);
+  const camera: PerspectiveCamera = new THREE.PerspectiveCamera(75, _aspect, 0.1, 1000);
+  let modelCamera: PerspectiveCamera;
   const gsapModel = {
     process: 0,
   };
 
+  scene.background = new THREE.Color(255, 255, 255);
   renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(width, height);
   renderer.setAnimationLoop(animate);
@@ -68,9 +72,10 @@ onMounted(() => {
 
   // 创建背景图
   function createSceneBackground() {
+    // scene.background = null;
     const clearPass = new ClearPass(params.clearColor, params.clearAlpha);
     const texturePass = new TexturePass();
-    const renderPass = new RenderPass(scene, camera);
+    const renderPass = new RenderPass(scene, modelCamera ?? camera);
     let cubeTexturePassP;
     composer.addPass(clearPass);
     composer.addPass(texturePass);
@@ -118,24 +123,33 @@ onMounted(() => {
   }); */
   loader.load("/assets/my-cube/extend_cube.gltf", (gltf) => {
     const model = gltf.scene;
-
+    console.log("模型数据：", gltf);
     mixer = new THREE.AnimationMixer(model);
     cubeClipAction = mixer.clipAction(gltf.animations[0]);
+    cameraClipAction = mixer.clipAction(gltf.animations[1]);
     cubeClipAction.play();
+    cameraClipAction.play();
 
     clip = cubeClipAction.getClip();
+    cameraClip = cameraClipAction.getClip();
 
     // eslint-disable-next-line no-multi-assign,no-param-reassign
     model.scale.x = model.scale.y = model.scale.z = 30;
     model.position.y = 100;
     model.position.x = -100;
+    modelCamera = gltf.cameras[0];
     scene.add(model);
+    createSceneBackground();
+    // 新增Blender内部所制作的摄像头
+    // scene.add(modelCamera);
+    console.log("modelCamera", modelCamera);
     // render();
   }, undefined, console.error);
 
   if (canvasLayoutRef.value) {
     const canvas = renderer.domElement;
     canvas.style.position = "fixed";
+    canvas.style.pointerEvents = "none";
     canvas.style.top = "0";
     canvas.style.left = "0";
     canvasLayoutRef.value.appendChild(canvas);
@@ -156,6 +170,10 @@ onMounted(() => {
     const _height = window.innerHeight;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    if (modelCamera) {
+      // modelCamera.aspect = width / height;
+      modelCamera.updateProjectionMatrix();
+    }
 
     renderer.setSize(_width, _height);
     composer.setSize(_width, _height);
@@ -168,13 +186,15 @@ onMounted(() => {
   }
 
   function render() {
-    renderer.render(scene, camera);
-    composer.render();
+    if (modelCamera) {
+      renderer.render(scene, modelCamera);
+    }
+    // composer.render();
   }
 
   function animate() {
-    if (isDestroyed) return;
-    const delta = clock.getDelta();
+    // if (isDestroyed) return;
+    // const delta = clock.getDelta();
 
     render();
     // mixerRender(delta);
@@ -185,8 +205,8 @@ onMounted(() => {
       process: 1,
       duration: 2,
       scrollTrigger: {
-        trigger: canvasLayoutRef.value,
-        start: "top top",
+        trigger: "body",
+        start: "top",
         end: "bottom",
         scrub: true,
         markers: true,
@@ -199,7 +219,7 @@ onMounted(() => {
   }
 
   createLight();
-  createSceneBackground();
+  // createSceneBackground();
   // createControls();
   animate();
   setGsap();
@@ -238,18 +258,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-[1500px]">
-    <div ref="canvasLayoutRef"
-         class="h-[100vh] w-fill">
-    <!--
-      <canvas ref="canvasLayoutRef"
-      class="h-[100vh] w-[100vw]" />
-    -->
-    </div>
-    <div class="absolute left-0 top-0 z-index-[100]">
-      <a class="bg-[#000] flex items-center p-2 rounded-2xl select-none text-white"
-         @click="onFramePlay">逐帧播放</a>
-    </div>
+  <div ref="canvasLayoutRef"
+       class="h-[100vh] w-fill fixed top-0 left-0">
+       <!--
+         <canvas ref="canvasLayoutRef"
+         class="h-[100vh] w-[100vw]" />
+       -->
   </div>
 </template>
 

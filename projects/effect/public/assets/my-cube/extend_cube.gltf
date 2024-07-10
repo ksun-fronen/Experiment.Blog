@@ -8,7 +8,8 @@
         {
             "name" : "Scene",
             "nodes" : [
-                0
+                0,
+                1
             ]
         }
     ],
@@ -21,6 +22,38 @@
                 1.0099999904632568,
                 0
             ]
+        },
+        {
+            "camera" : 0,
+            "name" : "Camera",
+            "rotation" : [
+                -0.20997300744056702,
+                0.3857799470424652,
+                0.09062843769788742,
+                0.8937962055206299
+            ],
+            "scale" : [
+                0.7859255075454712,
+                0.7859253883361816,
+                0.7859253883361816
+            ],
+            "translation" : [
+                6.348891258239746,
+                4.958309173583984,
+                6.925790786743164
+            ]
+        }
+    ],
+    "cameras" : [
+        {
+            "name" : "Camera",
+            "perspective" : {
+                "aspectRatio" : 1.7777777777777777,
+                "yfov" : 0.4511407730541847,
+                "zfar" : 100,
+                "znear" : 0.10000000149011612
+            },
+            "type" : "perspective"
         }
     ],
     "animations" : [
@@ -40,6 +73,25 @@
                     "input" : 4,
                     "interpolation" : "LINEAR",
                     "output" : 5
+                }
+            ]
+        },
+        {
+            "channels" : [
+                {
+                    "sampler" : 0,
+                    "target" : {
+                        "node" : 1,
+                        "path" : "translation"
+                    }
+                }
+            ],
+            "name" : "CameraAction",
+            "samplers" : [
+                {
+                    "input" : 4,
+                    "interpolation" : "LINEAR",
+                    "output" : 6
                 }
             ]
         }
@@ -114,19 +166,25 @@
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 60,
+            "count" : 61,
             "max" : [
                 2.5
             ],
             "min" : [
-                0.041666666666666664
+                0
             ],
             "type" : "SCALAR"
         },
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 60,
+            "count" : 61,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 61,
             "type" : "VEC3"
         }
     ],
@@ -157,18 +215,23 @@
         },
         {
             "buffer" : 0,
-            "byteLength" : 240,
+            "byteLength" : 244,
             "byteOffset" : 161368
         },
         {
             "buffer" : 0,
-            "byteLength" : 720,
-            "byteOffset" : 161608
+            "byteLength" : 732,
+            "byteOffset" : 161612
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 732,
+            "byteOffset" : 162344
         }
     ],
     "buffers" : [
         {
-            "byteLength" : 162328,
+            "byteLength" : 163076,
             "uri" : "extend_cube.bin"
         }
     ]

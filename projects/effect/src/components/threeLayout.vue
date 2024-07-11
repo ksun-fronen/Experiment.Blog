@@ -137,7 +137,9 @@ onMounted(() => {
     model.scale.x = model.scale.y = model.scale.z = 30;
     model.position.y = 100;
     model.position.x = -100;
-    modelCamera = gltf.cameras[0];
+    // noinspection UnnecessaryLocalVariableJS
+    const _camera: any = gltf.cameras[0];
+    modelCamera = _camera;
     scene.add(model);
     createSceneBackground();
     // 新增Blender内部所制作的摄像头
@@ -259,7 +261,7 @@ onUnmounted(() => {
 
 <template>
   <div ref="canvasLayoutRef"
-       class="h-[100vh] w-fill fixed top-0 left-0">
+       class="fixed h-[100vh] left-0 top-0 w-fill">
        <!--
          <canvas ref="canvasLayoutRef"
          class="h-[100vh] w-[100vw]" />
